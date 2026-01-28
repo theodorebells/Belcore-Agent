@@ -2,6 +2,9 @@
 export type SMEStatus = 'New Lead' | 'Discovery' | 'Assessment' | 'Proposal Sent' | 'Implementation' | 'Completed';
 
 export interface ReadinessAnswers {
+  // Core & Location
+  location: string;
+  
   // Customer & Sales
   customerRecording: string[];
   storageMethod: string[];
@@ -43,6 +46,7 @@ export interface SMESubmission {
   createdAt: string;
   implementationProgress: number;
   adminNotes?: string;
+  aiStrategy?: string; // New: AI's simple recommendation for the admin
 }
 
 export enum AppSection {

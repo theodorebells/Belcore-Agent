@@ -15,42 +15,44 @@ import Contact from './components/Contact';
 import AIAgents from './components/AIAgents';
 import ErrorProofing from './components/ErrorProofing';
 
-const STORAGE_KEY = 'belcore_v3_data';
+const STORAGE_KEY = 'belcore_ph_official_v2';
 
 const INITIAL_SME: SMESubmission[] = [
   {
-    id: 'demo-1',
-    businessName: "Lagos Trend Boutique",
-    industry: "Retail (Boutiques/Provisions)",
-    contactPerson: "Ifeoma Okafor",
-    phoneNumber: "08012345678",
-    challenge: "Losing track of customer orders",
+    id: 'ph-demo-1',
+    businessName: "Garden City Logistics",
+    industry: "Logistics & Transport",
+    contactPerson: "Tamuno George",
+    phoneNumber: "08030001111",
+    challenge: "Waybill tracking chaos",
     status: "Implementation",
-    implementationProgress: 35,
+    implementationProgress: 45,
     readiness: {
-      customerRecording: ['Paper/Notebook'],
-      storageMethod: ['Notebooks'],
-      lostLeadsCount: '5-20 (Worrisome)',
+      location: 'Port Harcourt',
+      customerRecording: ['WhatsApp Messages'],
+      storageMethod: ['Notebooks', 'Excel'],
+      lostLeadsCount: '11-30 (Critical)',
       followUpMethod: ['Scrolling through WhatsApp'],
       paymentReminders: ['Manual calls'],
-      repetitiveTasks: 'Daily sales balancing',
-      orderProcess: ['Writing in book'],
-      inventoryMethod: ['Physical Count'],
-      searchTime: 'High',
-      teamComm: ['WhatsApp'],
-      digitalTools: [],
+      repetitiveTasks: 'Manual driver dispatch',
+      orderProcess: ['WhatsApp screenshots'],
+      inventoryMethod: ['Physical Ledger'],
+      searchTime: 'Very High',
+      teamComm: ['WhatsApp Group'],
+      digitalTools: ['WhatsApp Business'],
       primaryDevice: 'Smartphone',
       invoicingMethod: ['Handwritten'],
-      errorSource: ['Staff typing info'],
-      biggestFrustration: 'Losing track of customer orders',
-      breakPoint: ['Customer service'],
-      blockerToGrowth: ['Manual bookkeeping'],
-      autoWish: 'Automated receipts',
-      monthlyLoss: '₦50k-₦200k / 15 hrs',
-      investmentLevel: 'Medium (Willing to scale)'
+      errorSource: ['Typing waybills manually'],
+      biggestFrustration: 'Items get lost and drivers argue about payments',
+      breakPoint: ['Accountability'],
+      blockerToGrowth: ['Process lack'],
+      autoWish: 'Digital Waybill System',
+      monthlyLoss: '₦120k / 20 hrs',
+      investmentLevel: 'Growth (Medium investment)'
     },
     createdAt: new Date().toISOString(),
-    adminNotes: "Client currently uses 3 different physical notebooks for sales. High priority for digital sync."
+    adminNotes: "Client wants to stop using carbonized paper for waybills.",
+    aiStrategy: "1. PROBLEM: Waybills are on paper and get lost. 2. FIX: Move all waybills to a simple WhatsApp-linked digital form. 3. BENEFIT: No more lost items and faster payments for drivers."
   }
 ];
 
@@ -83,6 +85,10 @@ const App: React.FC = () => {
     setActiveSection(AppSection.ASSESSMENT_RESULT);
   };
 
+  const updateSubmissionWithAi = (id: string, aiStrategy: string) => {
+    setSubmissions(prev => prev.map(s => s.id === id ? { ...s, aiStrategy } : s));
+  };
+
   const updateStatus = (id: string, status: SMEStatus, progress: number, notes?: string) => {
     setSubmissions(prev => prev.map(s => 
       s.id === id ? { ...s, status, implementationProgress: progress, adminNotes: notes ?? s.adminNotes } : s
@@ -108,6 +114,7 @@ const App: React.FC = () => {
             submission={currentSubmission} 
             onNext={() => setActiveSection(AppSection.AGENTS)} 
             onBook={() => setActiveSection(AppSection.CONTACT)}
+            onAiUpdate={updateSubmissionWithAi}
           />
         )}
         
@@ -128,14 +135,17 @@ const App: React.FC = () => {
         )}
       </main>
 
-      <footer className="bg-white border-t py-12 px-4">
-        <div className="max-w-4xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8 opacity-60 grayscale hover:grayscale-0 transition-all">
-          <div className="text-center md:text-left">
-            <p className="font-black text-gray-900 uppercase tracking-tighter text-lg">BELCORE <span className="text-emerald-600">CAPITAL</span></p>
-            <p className="text-[10px] font-bold">Reg RC: 1883654 • Abuja & Lagos, Nigeria</p>
+      <footer className="bg-white border-t py-20 px-4">
+        <div className="max-w-4xl mx-auto flex flex-col md:flex-row justify-between items-center gap-12">
+          <div className="text-center md:text-left space-y-3">
+            <p className="font-black text-gray-900 uppercase tracking-tighter text-3xl">BELCORE <span className="text-emerald-600">CAPITAL</span></p>
+            <div className="space-y-1">
+              <p className="text-[11px] font-black text-gray-400 uppercase tracking-[0.2em]">Registration RC: 9165301</p>
+              <p className="text-[11px] font-black text-gray-400 uppercase tracking-[0.2em]">Regional Branches: Lagos | PH | Abuja | Bayelsa</p>
+            </div>
           </div>
-          <div className="text-center md:text-right text-[10px] font-bold text-gray-400">
-            Proudly supporting 400+ Nigerian Entrepreneurs
+          <div className="text-center md:text-right text-[10px] font-bold text-gray-300 uppercase tracking-[0.4em] leading-relaxed">
+            Software Development • Business Automation • Intranet Design<br/>Helping 400+ Nigerian SMEs Scale Securely.
           </div>
         </div>
       </footer>
