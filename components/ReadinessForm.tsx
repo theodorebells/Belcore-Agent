@@ -38,7 +38,7 @@ const ReadinessForm: React.FC<ReadinessFormProps> = ({ onSubmit, onCancel }) => 
       blockerToGrowth: [],
       autoWish: '',
       monthlyLoss: '',
-      investmentLevel: ''
+      investmentLevel: 'Growth (System Overhaul)'
     } as ReadinessAnswers
   });
 
@@ -229,7 +229,12 @@ const ReadinessForm: React.FC<ReadinessFormProps> = ({ onSubmit, onCancel }) => 
                 <p className="text-gray-500 max-w-sm mx-auto font-medium">Proceed to see how BELCORE AI identifies your operational gaps.</p>
               </div>
               <div className="grid md:grid-cols-2 gap-8 max-w-2xl mx-auto">
-                <FormSelect label="Monthly Operational Budget for ICT" value={formData.readiness.investmentLevel} onChange={v => updateField('investmentLevel', v)} options={['Strategic (₦75k+)', 'Enterprise (₦250k+)', 'Custom Dev']} />
+                <FormSelect 
+                  label="Monthly Operational ICT Strategy" 
+                  value={formData.readiness.investmentLevel} 
+                  onChange={v => updateField('investmentLevel', v)} 
+                  options={['Maintenance (Basic Essentials)', 'Growth (System Overhaul)', 'Strategic (Full Digitalization)']} 
+                />
                 <FormInputWithSuggestions 
                   label="Final Automation Goal" 
                   value={formData.readiness.autoWish} 

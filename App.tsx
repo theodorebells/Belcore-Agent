@@ -30,26 +30,26 @@ const INITIAL_SME: SMESubmission[] = [
     implementationProgress: 45,
     readiness: {
       location: 'Port Harcourt',
-      customerRecording: ['WhatsApp Messages'],
+      customerRecording: ['Waybill Slips'],
       storageMethod: ['Notebooks', 'Excel'],
       lostLeadsCount: '11-30 (Critical)',
       followUpMethod: ['Scrolling through WhatsApp'],
       paymentReminders: ['Manual calls'],
       repetitiveTasks: 'Manual driver dispatch',
-      orderProcess: ['WhatsApp screenshots'],
+      orderProcess: ['Parcel booking', 'Waybill generation'],
       inventoryMethod: ['Physical Ledger'],
       searchTime: 'Very High',
       teamComm: ['WhatsApp Group'],
       digitalTools: ['WhatsApp Business'],
       primaryDevice: 'Smartphone',
-      invoicingMethod: ['Handwritten'],
+      invoicingMethod: ['Manual Carbon-copy'],
       errorSource: ['Typing waybills manually'],
       biggestFrustration: 'Items get lost and drivers argue about payments',
       breakPoint: ['Accountability'],
       blockerToGrowth: ['Process lack'],
       autoWish: 'Digital Waybill System',
       monthlyLoss: '₦120k / 20 hrs',
-      investmentLevel: 'Growth (Medium investment)'
+      investmentLevel: 'Growth (System Overhaul)'
     },
     createdAt: new Date().toISOString(),
     adminNotes: "Client wants to stop using carbonized paper for waybills.",
@@ -74,7 +74,6 @@ const App: React.FC = () => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(submissions));
   }, [submissions]);
 
-  // Global instantaneous scroll to top on navigation
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   }, [activeSection]);
@@ -130,20 +129,15 @@ const App: React.FC = () => {
           <AssessmentResult 
             submission={currentSubmission} 
             onNext={() => setActiveSection(AppSection.AGENTS)} 
-            onBook={() => setActiveSection(AppSection.CONTACT)}
             onAiUpdate={updateSubmissionWithAi}
           />
         )}
         
         {activeSection === AppSection.AGENTS && (
           <AIAgents 
-            onNext={() => setActiveSection(AppSection.ERROR_PROOFING)} 
+            onNext={() => setActiveSection(AppSection.SERVICES)} 
             submission={currentSubmission}
           />
-        )}
-        
-        {activeSection === AppSection.ERROR_PROOFING && (
-          <ErrorProofing onNext={() => setActiveSection(AppSection.SERVICES)} />
         )}
         
         {activeSection === AppSection.SERVICES && (

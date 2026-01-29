@@ -47,14 +47,13 @@ const AIAgents: React.FC<AIAgentsProps> = ({ onNext, submission }) => {
     }
   ];
 
-  // Logic to highlight agents based on submission
   const getRelevance = (agent: typeof agents[0]) => {
     if (!submission) return false;
     const textToSearch = (
       submission.readiness.biggestFrustration + 
       submission.readiness.autoWish + 
       submission.readiness.errorSource.join(' ') +
-      submission.aiStrategy
+      (submission.aiStrategy || '')
     ).toLowerCase();
     
     return agent.keywords.some(kw => textToSearch.includes(kw));
@@ -63,10 +62,10 @@ const AIAgents: React.FC<AIAgentsProps> = ({ onNext, submission }) => {
   return (
     <div className="space-y-20 sm:space-y-24 py-10 animate-in fade-in slide-in-from-bottom-10 duration-700 pb-32">
       <div className="text-center space-y-6 px-4">
-        <div className="inline-block px-4 py-1.5 bg-purple-100 text-purple-700 text-[10px] font-black rounded-full uppercase tracking-widest">Digital Workforce Selection</div>
-        <h2 className="text-4xl sm:text-6xl md:text-7xl font-black text-gray-900 tracking-tighter leading-none">Assemble Your <span className="text-emerald-600">Squad.</span></h2>
+        <div className="inline-block px-4 py-1.5 bg-purple-100 text-purple-700 text-[10px] font-black rounded-full uppercase tracking-widest shadow-sm">Digital Workforce Assembly</div>
+        <h2 className="text-4xl sm:text-6xl md:text-7xl font-black text-gray-900 tracking-tighter leading-none">Your Expert <span className="text-emerald-600">Squad.</span></h2>
         <p className="text-gray-500 max-w-2xl mx-auto text-lg sm:text-xl font-medium leading-relaxed italic">
-          "Based on your audit results, BELCORE has identified the specific digital agents needed to fix your operations."
+          "Based on your audit, BELCORE has identified the specific digital agents needed for your {submission?.industry.split(' (')[0]} business."
         </p>
       </div>
 
@@ -79,7 +78,7 @@ const AIAgents: React.FC<AIAgentsProps> = ({ onNext, submission }) => {
               className={`bg-white p-8 sm:p-10 rounded-[40px] sm:rounded-[50px] border transition-all group hover:-translate-y-3 flex flex-col relative overflow-hidden ${isRecommended ? 'border-emerald-500 shadow-2xl ring-4 ring-emerald-50' : 'border-gray-100 shadow-sm opacity-60 hover:opacity-100'}`}
             >
               {isRecommended && (
-                <div className="absolute top-4 right-4 bg-emerald-600 text-white text-[8px] font-black px-3 py-1 rounded-full uppercase tracking-widest z-20 shadow-lg">
+                <div className="absolute top-4 right-4 bg-emerald-600 text-white text-[8px] font-black px-3 py-1 rounded-full uppercase tracking-widest z-20 shadow-lg animate-bounce">
                   AI Recommended
                 </div>
               )}
@@ -105,9 +104,9 @@ const AIAgents: React.FC<AIAgentsProps> = ({ onNext, submission }) => {
       <div className="bg-gray-900 rounded-[50px] sm:rounded-[80px] p-10 sm:p-24 text-white relative overflow-hidden shadow-3xl mx-4">
          <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-transparent to-emerald-500/10"></div>
          <div className="relative z-10 space-y-10 sm:space-y-12 max-w-4xl mx-auto text-center">
-            <h3 className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tighter leading-none">Ready to deploy these systems?</h3>
+            <h3 className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tighter leading-none">Assemble Your Implementation.</h3>
             <p className="text-gray-400 text-lg sm:text-xl font-medium leading-relaxed">
-               Next, we will review the pricing packages and select the tier that fits your growth ambitions.
+               Review the pricing and select the deployment tier recommended by the AI audit.
             </p>
             
             <div className="pt-6 flex flex-col items-center gap-8">
@@ -115,9 +114,9 @@ const AIAgents: React.FC<AIAgentsProps> = ({ onNext, submission }) => {
                 onClick={onNext}
                 className="group px-10 sm:px-16 py-5 sm:py-7 bg-emerald-600 text-white font-black rounded-3xl hover:bg-emerald-500 transition-all shadow-2xl hover:scale-105 active:scale-95 text-lg sm:text-xl flex items-center gap-4"
                >
-                 View Recommended Pricing <span className="text-2xl sm:text-3xl group-hover:translate-x-2 transition-transform">→</span>
+                 View My Recommended Pricing <span className="text-2xl sm:text-3xl group-hover:translate-x-2 transition-transform">→</span>
                </button>
-               <p className="text-[10px] text-gray-500 font-black uppercase tracking-[0.4em]">Belcore Capital Ltd Implementation Logic</p>
+               <p className="text-[10px] text-gray-500 font-black uppercase tracking-[0.4em]">Belcore Capital Ltd Implementation Path</p>
             </div>
          </div>
       </div>

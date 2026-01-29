@@ -47,24 +47,56 @@ export const AUTOMATION_SOLUTIONS: AutomationSolution[] = [
     desc: "Automated 'Gentle Reminders' sent to customers who haven't paid their balance.",
     icon: "💳",
     tag: "Cash Flow",
-    example: "Mr. Jude owes ₦12,000 for 2 weeks. Every Monday and Thursday at 10 AM, he gets a polite WhatsApp reminder with a payment link. You don't have to call him and feel awkward.",
-    howItWorks: "The system checks your 'Unpaid' list every morning and sends messages automatically based on your preferred schedule."
+    example: "Mr. Jude owes ₦12,000 for 2 weeks. Every Monday and Thursday at 10 AM, he gets a polite WhatsApp reminder with a payment link.",
+    howItWorks: "The system checks your 'Unpaid' list every morning and sends messages automatically based on your schedule."
   },
   {
     title: "Smart Inventory Sync",
     desc: "Real-time stock tracking that catches staff theft and alerts you before items finish.",
     icon: "📦",
     tag: "Security",
-    example: "If a staff sells a bag of rice but doesn't record it, the physical count won't match the system. The system flags this 'Mismatch' and pings your phone immediately.",
-    howItWorks: "Every sale reduces stock count in the cloud. We compare this to your physical stock audits to ensure zero leakage."
+    example: "If a staff sells a bag of rice but doesn't record it, the system flags the physical mismatch and pings your phone immediately.",
+    howItWorks: "Every sale reduces stock count in the cloud. We compare this to physical audits for zero leakage."
   },
   {
     title: "Digital Receipting",
     desc: "Auto-generate professional PDF invoices and send them to clients via WhatsApp.",
     icon: "📑",
     tag: "Efficiency",
-    example: "As soon as you type 'Sold' on your dashboard, the customer receives a branded PDF receipt. No more searching for a pen or carbonized paper books.",
+    example: "As soon as you type 'Sold' on your dashboard, the customer receives a branded PDF receipt. No more paper books.",
     howItWorks: "We build a PDF engine that uses your business logo to create professional documents on the fly."
+  },
+  {
+    title: "Staff Auditor",
+    desc: "Track staff clock-ins and daily sales reporting to ensure full accountability.",
+    icon: "🕵️",
+    tag: "Control",
+    example: "Staff must submit a digital 'End of Day' report before the system closes. You get a summary of cash vs. bank transfers.",
+    howItWorks: "A simple staff-facing interface that validates daily totals before the owner's dashboard syncs."
+  },
+  {
+    title: "Customer CRM",
+    desc: "Automatically save customer details for festive season marketing and birthday messages.",
+    icon: "🤝",
+    tag: "Retention",
+    example: "Your system collects names and birthdays. Every December, 500 customers get a personalized 'Thank You' text with a discount code.",
+    howItWorks: "Every order triggers a data capture into a centralized database for future marketing automation."
+  },
+  {
+    title: "Expense Monitor",
+    desc: "Log daily expenses like fuel and repairs on your phone to see your real monthly profit.",
+    icon: "📊",
+    tag: "Finance",
+    example: "Instead of wondering where the money went, you log '₦5,000 Fuel' and see your net profit updated in real-time.",
+    howItWorks: "Expense categorization engine that reconciles with your daily sales for a true financial picture."
+  },
+  {
+    title: "Multi-Location Sync",
+    desc: "Manage multiple branches from one dashboard in Port Harcourt or anywhere in the world.",
+    icon: "🌐",
+    tag: "Scale",
+    example: "See sales for your Port Harcourt and Lagos branches simultaneously without calling the managers every hour.",
+    howItWorks: "Distributed cloud infrastructure that aggregates data from different locations into one owner's app."
   }
 ];
 
