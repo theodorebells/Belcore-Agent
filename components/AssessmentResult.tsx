@@ -17,10 +17,10 @@ const AssessmentResult: React.FC<AssessmentResultProps> = ({ submission, onNext,
   const hasFetched = useRef(false);
 
   const loadingMessages = [
-    "Analyzing your operational friction points...",
+    "Bella is reviewing your operational logs...",
     "Tracing revenue leaks in your recording process...",
     "Mapping custom automation architecture...",
-    "Calculating efficiency ROI for 2026 market...",
+    "Bella is calculating your 2026 efficiency ROI...",
     "Signing Executive Diagnostic Brief..."
   ];
 
@@ -28,8 +28,8 @@ const AssessmentResult: React.FC<AssessmentResultProps> = ({ submission, onNext,
   const getFormalDate = () => {
     const today = new Date();
     const day = today.getDate();
-    const month = "January"; // Fixed to Jan as requested
-    const year = "2026"; // Fixed to 2026 as requested
+    const month = "January"; 
+    const year = "2026"; 
     
     const getOrdinal = (n: number) => {
       if (n > 3 && n < 21) return 'th';
@@ -80,14 +80,16 @@ const AssessmentResult: React.FC<AssessmentResultProps> = ({ submission, onNext,
           - Their Goal: ${submission.readiness.autoWish}
 
           INSTRUCTIONS:
-          Use plain, bold, professional English. Avoid technical jargon.
-          Format the report with these exact headers:
-          
-          1. THE PROBLEM: Tell them exactly why their current "${submission.readiness.customerRecording[0]}" process is costing them money and causing "${submission.readiness.biggestFrustration}".
-          2. THE BELCORE SOLUTION: Name 2 specific softwares we will build for them (e.g. "Auto-WhatsApp Sales Bot" or "Cloud Finance Ledger"). Explain how it solves their pain.
-          3. YOUR NEW BUSINESS: Describe how much easier their life will be once this is live. Mention 24/7 accountability.
+          Start the report with a friendly, professional introduction:
+          "Hi there, this is Bella from the Belcore Engineering Team. We've carefully analyzed the operations at ${submission.businessName} and we've identified exactly where your business is losing momentum."
 
-          END WITH:
+          Then, use plain, bold, professional English to complete the following sections:
+          
+          1. THE PROBLEM: Explain why their current "${submission.readiness.customerRecording[0]}" process is directly causing their "${submission.readiness.biggestFrustration}".
+          2. THE BELCORE SOLUTION: Name 2 specific softwares we will build (e.g. "Bella-Sync Sales Bot" or "Custom Inventory Shield"). Explain how they fix the pain.
+          3. YOUR NEW BUSINESS: Describe how much smoother their daily life will be once this is live.
+
+          END THE RESPONSE WITH:
           PACKAGE_RECOMMENDATION: [One of: "Core Automation Setup (₦75k)", "Full Digital Workforce Suite", "Custom Enterprise Development"]
         `;
 
@@ -105,11 +107,10 @@ const AssessmentResult: React.FC<AssessmentResultProps> = ({ submission, onNext,
         const strategyText = cleanText(rawText.split("PACKAGE_RECOMMENDATION:")[0]);
         setAiBlueprint(strategyText);
         setRecommendedPlan(packageRec);
-        // This ensures the brief is sent to the admin panel
         onAiUpdate(submission.id, strategyText, packageRec);
       } catch (error) {
         console.error("AI Analysis failed", error);
-        setAiBlueprint(`Diagnostic finalized. We identified that your manual tracking is causing significant revenue leaks. We recommend immediate transition to a Digital Ledger.`);
+        setAiBlueprint(`Hi there, this is Bella from Belcore. We've analyzed your business and identified that manual record keeping is your biggest bottleneck. We recommend transitioning to a Digital Ledger immediately.`);
       }
     }
 
@@ -123,11 +124,11 @@ const AssessmentResult: React.FC<AssessmentResultProps> = ({ submission, onNext,
            <div className="relative w-32 h-32 mx-auto">
              <div className="absolute inset-0 border-4 border-emerald-500/10 rounded-full"></div>
              <div className="absolute inset-0 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin duration-700"></div>
-             <div className="absolute inset-0 flex items-center justify-center text-5xl">📋</div>
+             <div className="absolute inset-0 flex items-center justify-center text-5xl">👩‍💻</div>
            </div>
            
            <div className="space-y-4">
-             <h2 className="text-emerald-500 font-black text-xs uppercase tracking-[0.4em] animate-pulse">Belcore Analysis Node</h2>
+             <h2 className="text-emerald-500 font-black text-xs uppercase tracking-[0.4em] animate-pulse">Bella is Generating Your Audit</h2>
              <p className="text-white text-2xl sm:text-4xl font-black tracking-tighter leading-tight min-h-[4rem]">
                {loadingMessages[loadingPhase] || "Analysis Finalized."}
              </p>
@@ -149,7 +150,7 @@ const AssessmentResult: React.FC<AssessmentResultProps> = ({ submission, onNext,
       <div className="text-center space-y-4">
         <div className="inline-flex items-center gap-2 px-5 py-2 bg-gray-900 text-emerald-400 rounded-full text-[10px] font-black tracking-widest uppercase border border-emerald-500/20">
           <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-          Audit Transmission: Verified
+          Bella's Transmission: Verified
         </div>
         <h2 className="text-5xl sm:text-7xl font-black text-gray-900 tracking-tighter leading-none">
           Diagnostic <span className="text-emerald-600">Brief.</span>
@@ -161,11 +162,11 @@ const AssessmentResult: React.FC<AssessmentResultProps> = ({ submission, onNext,
         <div className="bg-gray-900 p-10 sm:p-14 text-white flex flex-col md:flex-row justify-between items-start md:items-center gap-8 relative overflow-hidden">
            <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2"></div>
            <div className="space-y-2 relative z-10">
-              <p className="text-[10px] font-black text-emerald-400 uppercase tracking-[0.4em]">Confidential Diagnostic</p>
+              <p className="text-[10px] font-black text-emerald-400 uppercase tracking-[0.4em]">Confidential Engineering Analysis</p>
               <h3 className="text-3xl font-black tracking-tighter">LETTER OF STRATEGY</h3>
            </div>
            <div className="relative z-10">
-              <p className="text-[10px] font-black text-gray-500 uppercase mb-1">Issue Date</p>
+              <p className="text-[10px] font-black text-gray-500 uppercase mb-1">Audit Date</p>
               <p className="text-lg font-mono font-bold text-emerald-400">{getFormalDate()}</p>
            </div>
         </div>
@@ -174,14 +175,14 @@ const AssessmentResult: React.FC<AssessmentResultProps> = ({ submission, onNext,
           {/* Address Block */}
           <div className="grid md:grid-cols-2 gap-12 border-b border-gray-100 pb-16">
              <div className="space-y-4">
-                <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Sent From:</p>
+                <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">From:</p>
                 <div className="space-y-1">
-                  <p className="text-2xl font-black text-gray-900">BELCORE CAPITAL LTD</p>
-                  <p className="text-sm font-medium text-gray-500">Engineering Desk • {submission.readiness.location} Region</p>
+                  <p className="text-2xl font-black text-gray-900 underline decoration-emerald-500 underline-offset-8">Bella @ Belcore</p>
+                  <p className="text-sm font-medium text-gray-500">Lead Engineering Desk • 2026 Strategy Cycle</p>
                 </div>
              </div>
              <div className="space-y-4 text-left md:text-right">
-                <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Prepared For:</p>
+                <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">To:</p>
                 <div className="space-y-1">
                   <p className="text-2xl font-black text-gray-900">{submission.businessName}</p>
                   <p className="text-sm font-medium text-gray-500">{submission.industry.split(' (')[0]} Excellence Program</p>
@@ -194,11 +195,11 @@ const AssessmentResult: React.FC<AssessmentResultProps> = ({ submission, onNext,
              {!aiBlueprint ? (
                <div className="flex flex-col items-center gap-6 py-20 text-center">
                  <div className="w-12 h-12 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
-                 <p className="text-xs font-black text-gray-400 uppercase tracking-widest">Finalizing Recommendation...</p>
+                 <p className="text-xs font-black text-gray-400 uppercase tracking-widest">Finalizing Bella's Notes...</p>
                </div>
              ) : (
                <div className="prose prose-2xl max-w-none">
-                 <div className="whitespace-pre-wrap font-bold text-gray-700 leading-relaxed sm:leading-loose text-xl sm:text-3xl font-['Inter'] tracking-tight">
+                 <div className="whitespace-pre-wrap font-bold text-gray-700 leading-relaxed sm:leading-snug text-xl sm:text-3xl font-['Inter'] tracking-tight">
                    {aiBlueprint}
                  </div>
                </div>
@@ -209,20 +210,20 @@ const AssessmentResult: React.FC<AssessmentResultProps> = ({ submission, onNext,
                    <p className="text-[10px] font-black text-emerald-600 uppercase tracking-widest">Official Tier Recommendation</p>
                    <div className="space-y-2">
                      <p className="text-4xl font-black text-emerald-900 tracking-tighter">{recommendedPlan}</p>
-                     <p className="text-xs text-emerald-600 font-bold italic">Strategy optimized for ${submission.readiness.location} operations.</p>
+                     <p className="text-xs text-emerald-600 font-bold italic">Chosen by Bella for your current scale.</p>
                    </div>
                 </div>
                 
                 <div className="bg-gray-900 p-12 rounded-[50px] text-white flex flex-col justify-between gap-10 group">
                    <div className="space-y-3">
                      <p className="text-[10px] font-black text-gray-500 uppercase tracking-widest">Phase 02</p>
-                     <h4 className="text-3xl font-black leading-none">Review Your New <br/>Digital Team</h4>
+                     <h4 className="text-3xl font-black leading-none">Meet Your New <br/>Digital Workforce</h4>
                    </div>
                    <button 
                      onClick={onNext}
                      className="w-full py-7 bg-emerald-600 text-white rounded-3xl font-black text-xl hover:bg-emerald-500 transition-all active:scale-95 shadow-2xl"
                    >
-                     Meet Your Agents →
+                     Meet My Agents →
                    </button>
                 </div>
              </div>
@@ -232,7 +233,7 @@ const AssessmentResult: React.FC<AssessmentResultProps> = ({ submission, onNext,
              <div className="flex items-center gap-4">
                 <div className="w-14 h-14 bg-gray-100 rounded-2xl flex items-center justify-center font-black text-2xl border border-gray-200">B</div>
                 <div>
-                  <p className="text-[10px] font-black uppercase tracking-widest">Verified Strategic Brief</p>
+                  <p className="text-[10px] font-black uppercase tracking-widest">Certified Strategy Brief</p>
                   <p className="text-[9px] font-bold text-gray-400 uppercase">BELCORE CAPITAL RC: 9165301</p>
                 </div>
              </div>
