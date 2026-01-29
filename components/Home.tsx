@@ -89,7 +89,7 @@ const Home: React.FC<{ onStart: () => void; onSeeMoreAgents?: () => void }> = ({
         </div>
       </div>
 
-      {/* 4. Strategic Automation: Balanced Font Sizes */}
+      {/* 4. Strategic Automation: 3x3 Grid on Desktop */}
       <div className="space-y-16 sm:space-y-24 px-4">
         <div className="text-center max-w-3xl mx-auto space-y-6">
           <p className="text-emerald-600 font-black text-[11px] uppercase tracking-[0.3em]">The Technical Framework</p>
@@ -97,7 +97,7 @@ const Home: React.FC<{ onStart: () => void; onSeeMoreAgents?: () => void }> = ({
           <p className="text-gray-500 text-lg sm:text-xl font-medium">Select a core module to explore deployment specs and ROI metrics.</p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 sm:gap-8 max-w-[95rem] mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-7xl mx-auto">
            {AUTOMATION_SOLUTIONS.map((solution, idx) => (
              <button 
                 key={idx}
@@ -111,7 +111,7 @@ const Home: React.FC<{ onStart: () => void; onSeeMoreAgents?: () => void }> = ({
                 <h4 className="text-lg sm:text-xl font-black text-gray-900 mb-3 leading-tight">{solution.title}</h4>
                 <p className="text-[13px] sm:text-sm text-gray-500 leading-relaxed font-medium mb-8 flex-grow">{solution.desc}</p>
                 <div className="pt-4 flex items-center gap-2 text-[10px] font-black text-emerald-600 uppercase tracking-widest opacity-60 group-hover:opacity-100 transition-all">
-                   Technical Specs <span className="text-base">→</span>
+                   Learn More <span className="text-base">→</span>
                 </div>
              </button>
            ))}
@@ -133,40 +133,40 @@ const Home: React.FC<{ onStart: () => void; onSeeMoreAgents?: () => void }> = ({
            </button>
         </div>
 
-        {/* Modal Detail Popup */}
+        {/* Modal Detail Popup - Reduced size and padding */}
         {selectedSolution && (
           <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 sm:p-8 animate-in fade-in duration-300">
              <div className="absolute inset-0 bg-black/85 backdrop-blur-md" onClick={() => setSelectedSolution(null)} />
              
-             <div className="bg-white rounded-[40px] p-8 sm:p-16 md:p-20 text-gray-900 max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-3xl relative overflow-hidden animate-in zoom-in-95 duration-500 border border-gray-100">
+             <div className="bg-white rounded-[40px] p-6 sm:p-10 md:p-12 text-gray-900 max-w-2xl w-full max-h-[85vh] overflow-y-auto shadow-3xl relative overflow-hidden animate-in zoom-in-95 duration-500 border border-gray-100">
                 <button 
                   onClick={() => setSelectedSolution(null)} 
-                  className="absolute top-8 right-8 w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200 transition-all font-bold z-20 text-gray-500"
+                  className="absolute top-6 right-6 w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200 transition-all font-bold z-20 text-gray-500"
                 >
                   ✕
                 </button>
                 
-                <div className="relative z-10 space-y-10">
-                   <div className="space-y-4">
+                <div className="relative z-10 space-y-8">
+                   <div className="space-y-3">
                       <p className="text-emerald-600 font-black uppercase tracking-[0.5em] text-[10px] sm:text-xs">Metrics: {selectedSolution.tag}</p>
-                      <h4 className="text-3xl sm:text-5xl font-black tracking-tighter text-gray-900">{selectedSolution.title}</h4>
+                      <h4 className="text-2xl sm:text-4xl font-black tracking-tighter text-gray-900">{selectedSolution.title}</h4>
                    </div>
                    
-                   <div className="grid md:grid-cols-2 gap-10 sm:gap-16">
-                      <div className="space-y-5">
+                   <div className="grid md:grid-cols-2 gap-8">
+                      <div className="space-y-4">
                          <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Practical Scenario</p>
-                         <p className="text-lg sm:text-2xl font-medium leading-relaxed italic text-gray-700">"{selectedSolution.example}"</p>
+                         <p className="text-base sm:text-xl font-medium leading-relaxed italic text-gray-700">"{selectedSolution.example}"</p>
                       </div>
-                      <div className="space-y-5">
+                      <div className="space-y-4">
                          <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Technical Logic</p>
-                         <p className="text-lg sm:text-2xl font-medium leading-relaxed text-gray-500">{selectedSolution.howItWorks}</p>
+                         <p className="text-base sm:text-xl font-medium leading-relaxed text-gray-500">{selectedSolution.howItWorks}</p>
                       </div>
                    </div>
 
-                   <div className="pt-10 flex flex-col sm:flex-row gap-6 items-center border-t border-gray-100">
+                   <div className="pt-8 flex flex-col sm:flex-row gap-6 items-center border-t border-gray-100">
                       <button 
                         onClick={() => { setSelectedSolution(null); onStart(); }} 
-                        className="w-full sm:w-auto px-12 py-5 bg-emerald-600 text-white rounded-[1.5rem] font-black text-xl hover:bg-emerald-700 transition-all shadow-xl"
+                        className="w-full sm:w-auto px-10 py-4 bg-emerald-600 text-white rounded-[1.25rem] font-black text-lg hover:bg-emerald-700 transition-all shadow-xl"
                       >
                         Initiate Strategic Audit
                       </button>
