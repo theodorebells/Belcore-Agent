@@ -53,7 +53,8 @@ const INITIAL_SME: SMESubmission[] = [
     },
     createdAt: new Date().toISOString(),
     adminNotes: "Client wants to stop using carbonized paper for waybills.",
-    aiStrategy: "1. PROBLEM: Waybills are on paper and get lost. 2. FIX: Move all waybills to a simple WhatsApp-linked digital form. 3. BENEFIT: No more lost items and faster payments for drivers."
+    aiStrategy: "1. PROBLEM: Waybills are on paper and get lost. 2. FIX: Move all waybills to a simple WhatsApp-linked digital form. 3. BENEFIT: No more lost items and faster payments for drivers.",
+    recommendedPackage: "Full Digital Workforce Suite"
   }
 ];
 
@@ -91,8 +92,13 @@ const App: React.FC = () => {
     setActiveSection(AppSection.ASSESSMENT_RESULT);
   };
 
-  const updateSubmissionWithAi = (id: string, aiStrategy: string) => {
-    setSubmissions(prev => prev.map(s => s.id === id ? { ...s, aiStrategy } : s));
+  const updateSubmissionWithAi = (id: string, aiStrategy: string, recommendedPackage?: string) => {
+    setSubmissions(prev => {
+      const updated = prev.map(s => s.id === id ? { ...s, aiStrategy, recommendedPackage } : s);
+      const current = updated.find(s => s.id === id);
+      if (current) setCurrentSubmission(current);
+      return updated;
+    });
   };
 
   const updateStatus = (id: string, status: SMEStatus, progress: number, notes?: string) => {
@@ -129,9 +135,25 @@ const App: React.FC = () => {
           />
         )}
         
-        {activeSection === AppSection.AGENTS && <AIAgents onNext={() => setActiveSection(AppSection.ERROR_PROOFING)} />}
-        {activeSection === AppSection.ERROR_PROOFING && <ErrorProofing onNext={() => setActiveSection(AppSection.SERVICES)} />}
-        {activeSection === AppSection.SERVICES && <Services onContact={() => setActiveSection(AppSection.CONTACT)} onWorkflow={() => setActiveSection(AppSection.COMPARISON)} />}
+        {activeSection === AppSection.AGENTS && (
+          <AIAgents 
+            onNext={() => setActiveSection(AppSection.ERROR_PROOFING)} 
+            submission={currentSubmission}
+          />
+        )}
+        
+        {activeSection === AppSection.ERROR_PROOFING && (
+          <ErrorProofing onNext={() => setActiveSection(AppSection.SERVICES)} />
+        )}
+        
+        {activeSection === AppSection.SERVICES && (
+          <Services 
+            submission={currentSubmission}
+            onContact={() => setActiveSection(AppSection.CONTACT)} 
+            onWorkflow={() => setActiveSection(AppSection.COMPARISON)} 
+          />
+        )}
+        
         {activeSection === AppSection.COMPARISON && <Comparison onNext={() => setActiveSection(AppSection.WORKFLOWS)} />}
         {activeSection === AppSection.WORKFLOWS && <WorkflowDemo onNext={() => setActiveSection(AppSection.DASHBOARD)} />}
         {activeSection === AppSection.DASHBOARD && <Dashboard submissions={submissions} />}

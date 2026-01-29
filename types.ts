@@ -46,7 +46,8 @@ export interface SMESubmission {
   createdAt: string;
   implementationProgress: number;
   adminNotes?: string;
-  aiStrategy?: string; // New: AI's simple recommendation for the admin
+  aiStrategy?: string; 
+  recommendedPackage?: string; // New: Persisted package recommendation
 }
 
 export enum AppSection {

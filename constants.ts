@@ -4,6 +4,7 @@ import { SMEStatus } from './types';
 export const NIGERIAN_INDUSTRIES = [
   "Retail (Boutiques/Provisions)",
   "Restaurant & Food Services",
+  "Laundry & Dry Cleaning Services",
   "Logistics & Transport",
   "Professional Services (Law/Consulting)",
   "Hospitality (Catering/Hotels)",
