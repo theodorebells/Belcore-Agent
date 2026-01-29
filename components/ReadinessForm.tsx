@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NIGERIAN_INDUSTRIES } from '../constants';
 import { SMESubmission, ReadinessAnswers } from '../types';
 
@@ -42,6 +42,11 @@ const ReadinessForm: React.FC<ReadinessFormProps> = ({ onSubmit, onCancel }) => 
     } as ReadinessAnswers
   });
 
+  // Ensure scroll to top on step change - immediate behavior
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }, [step]);
+
   const updateField = (field: keyof ReadinessAnswers, value: any) => {
     setFormData(prev => ({
       ...prev,
@@ -69,11 +74,11 @@ const ReadinessForm: React.FC<ReadinessFormProps> = ({ onSubmit, onCancel }) => 
           <h2 className="text-4xl font-black text-gray-900 tracking-tighter uppercase">Business Audit</h2>
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-            <p className="text-gray-500 font-bold text-xs uppercase tracking-widest">Checking your business health</p>
+            <p className="text-gray-500 font-bold text-xs uppercase tracking-widest">Identifying Operational Risks</p>
           </div>
         </div>
         <div className="text-right">
-          <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Section {step} of {totalSteps}</p>
+          <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Audit Section {step} of {totalSteps}</p>
           <div className="flex gap-1.5">
             {Array.from({ length: totalSteps }).map((_, i) => (
               <div key={i} className={`h-1.5 w-6 rounded-full transition-all duration-500 ${step > i ? 'bg-emerald-500 w-10' : 'bg-gray-200'}`} />
@@ -88,15 +93,15 @@ const ReadinessForm: React.FC<ReadinessFormProps> = ({ onSubmit, onCancel }) => 
           {step === 1 && (
             <div className="space-y-10 animate-in fade-in slide-in-from-bottom-6">
               <div className="space-y-2">
-                <h3 className="text-3xl font-black text-gray-900">1. Who are you?</h3>
-                <p className="text-gray-500 font-medium text-sm">Fill in these basic details so we can reach you.</p>
+                <h3 className="text-3xl font-black text-gray-900">1. Core Information</h3>
+                <p className="text-gray-500 font-medium text-sm">Define your business profile for our regional engineers.</p>
               </div>
               <div className="grid md:grid-cols-2 gap-8">
-                <FormInput label="Name of your Business" value={formData.businessName} onChange={v => setFormData({...formData, businessName: v})} placeholder="e.g. Kola's Kitchen" />
-                <FormSelect label="Business Industry" value={formData.industry} onChange={v => setFormData({...formData, industry: v})} options={NIGERIAN_INDUSTRIES} />
-                <FormSelect label="Where are you located?" value={formData.readiness.location} onChange={v => updateField('location', v)} options={nigeriaStates} />
-                <FormInput label="Your Name (The Owner)" value={formData.contactPerson} onChange={v => setFormData({...formData, contactPerson: v})} placeholder="Full Name" />
-                <FormInput label="WhatsApp Number" value={formData.phoneNumber} onChange={v => setFormData({...formData, phoneNumber: v})} placeholder="080..." type="tel" />
+                <FormInput label="Official Business Name" value={formData.businessName} onChange={v => setFormData({...formData, businessName: v})} placeholder="e.g. Kola's Kitchen" />
+                <FormSelect label="Economic Sector" value={formData.industry} onChange={v => setFormData({...formData, industry: v})} options={NIGERIAN_INDUSTRIES} />
+                <FormSelect label="Primary Operational State" value={formData.readiness.location} onChange={v => updateField('location', v)} options={nigeriaStates} />
+                <FormInput label="Founder / Managing Director" value={formData.contactPerson} onChange={v => setFormData({...formData, contactPerson: v})} placeholder="Full Name" />
+                <FormInput label="Primary WhatsApp Uplink" value={formData.phoneNumber} onChange={v => setFormData({...formData, phoneNumber: v})} placeholder="080..." type="tel" />
               </div>
             </div>
           )}
@@ -104,13 +109,13 @@ const ReadinessForm: React.FC<ReadinessFormProps> = ({ onSubmit, onCancel }) => 
           {step === 2 && (
             <div className="space-y-10 animate-in fade-in slide-in-from-right-6">
               <div className="space-y-2">
-                <h3 className="text-3xl font-black text-gray-900">2. Customers</h3>
-                <p className="text-gray-500 font-medium text-sm">How do you talk to or record your customers?</p>
+                <h3 className="text-3xl font-black text-gray-900">2. Client Data Pipeline</h3>
+                <p className="text-gray-500 font-medium text-sm">How is customer information currently institutionalized?</p>
               </div>
               <div className="space-y-8">
-                <ChipGroup label="Where do you write down customer info?" options={['Paper Notebook', 'Phone Contacts', 'WhatsApp', 'Instagram/TikTok', 'Excel Sheets', 'POS App', 'Verbal/Memory']} selected={formData.readiness.customerRecording} onToggle={v => toggleMultiSelect('customerRecording', v)} />
-                <ChipGroup label="How do you remind them to pay?" options={['Calling one-by-one', 'WhatsApp Status', 'Manual Text Message', 'Status updates', 'Automated App']} selected={formData.readiness.followUpMethod} onToggle={v => toggleMultiSelect('followUpMethod', v)} />
-                <FormSelect label="How many customers do you lose monthly?" value={formData.readiness.lostLeadsCount} onChange={v => updateField('lostLeadsCount', v)} options={['Almost None', 'A few (3-10)', 'Many (10-30)', 'I have no idea']} />
+                <ChipGroup label="Primary Record-Keeping Method" options={['Paper Notebook', 'Phone Contacts', 'WhatsApp', 'Instagram/TikTok', 'Excel Sheets', 'POS App', 'Memory-based']} selected={formData.readiness.customerRecording} onToggle={v => toggleMultiSelect('customerRecording', v)} />
+                <ChipGroup label="Revenue Recovery Strategy (Debt)" options={['Manual Outreach', 'WhatsApp Status', 'Direct SMS', 'Automated Notifications', 'Zero strategy']} selected={formData.readiness.followUpMethod} onToggle={v => toggleMultiSelect('followUpMethod', v)} />
+                <FormSelect label="Estimated Monthly Conversion Loss" value={formData.readiness.lostLeadsCount} onChange={v => updateField('lostLeadsCount', v)} options={['Negligible', '3-10 clients', '10-30 clients', 'Unknown (High Risk)']} />
               </div>
             </div>
           )}
@@ -118,18 +123,18 @@ const ReadinessForm: React.FC<ReadinessFormProps> = ({ onSubmit, onCancel }) => 
           {step === 3 && (
             <div className="space-y-10 animate-in fade-in slide-in-from-right-6">
               <div className="space-y-2">
-                <h3 className="text-3xl font-black text-gray-900">3. Daily Work</h3>
-                <p className="text-gray-500 font-medium text-sm">What takes up most of your time every day?</p>
+                <h3 className="text-3xl font-black text-gray-900">3. Operational Friction</h3>
+                <p className="text-gray-500 font-medium text-sm">Which repetitive tasks consume the most executive time?</p>
               </div>
               <div className="space-y-8">
                 <FormInputWithSuggestions 
-                  label="What repetitive work tires you out?" 
+                  label="Target Task for Automation" 
                   value={formData.readiness.repetitiveTasks} 
                   onChange={v => updateField('repetitiveTasks', v)} 
-                  suggestions={['Balancing my sales book', 'Sending account details', 'Checking if stock is left', 'Chasing people for debt', 'Talking to staff']} 
+                  suggestions={['Sales reconciliation', 'Invoice generation', 'Stock auditing', 'Customer debt chasing', 'Staff reporting']} 
                 />
-                <ChipGroup label="How do you talk to your staff?" options={['Talking directly', 'WhatsApp Groups', 'Phone Calls', 'Paper notes']} selected={formData.readiness.teamComm} onToggle={v => toggleMultiSelect('teamComm', v)} />
-                <ChipGroup label="How do you count your products?" options={['Physical count', 'Big Ledger Book', 'Excel Sheets', 'I just trust the staff', 'Software']} selected={formData.readiness.inventoryMethod} onToggle={v => toggleMultiSelect('inventoryMethod', v)} />
+                <ChipGroup label="Internal Communication Channels" options={['Direct verbal', 'WhatsApp Groups', 'Formal Meetings', 'Written memos']} selected={formData.readiness.teamComm} onToggle={v => toggleMultiSelect('teamComm', v)} />
+                <ChipGroup label="Inventory Management Method" options={['Physical count', 'Ledger/Logbook', 'Cloud spreadsheet', 'Staff trust-based', 'Software system']} selected={formData.readiness.inventoryMethod} onToggle={v => toggleMultiSelect('inventoryMethod', v)} />
               </div>
             </div>
           )}
@@ -137,13 +142,13 @@ const ReadinessForm: React.FC<ReadinessFormProps> = ({ onSubmit, onCancel }) => 
           {step === 4 && (
             <div className="space-y-10 animate-in fade-in slide-in-from-right-6">
               <div className="space-y-2">
-                <h3 className="text-3xl font-black text-gray-900">4. Money & Tools</h3>
-                <p className="text-gray-500 font-medium text-sm">How do you handle receipts and payments?</p>
+                <h3 className="text-3xl font-black text-gray-900">4. Financial Infrastructure</h3>
+                <p className="text-gray-500 font-medium text-sm">Deployment status of digital payment and tools.</p>
               </div>
               <div className="space-y-8">
-                <ChipGroup label="How do you give receipts?" options={['Handwritten paper', 'WhatsApp Text', 'Payment Link', 'POS Printout', 'No Receipts']} selected={formData.readiness.invoicingMethod} onToggle={v => toggleMultiSelect('invoicingMethod', v)} />
-                <ChipGroup label="Tools you use now" options={['WhatsApp', 'Instagram', 'Excel', 'Paystack', 'Odoo', 'Canva']} selected={formData.readiness.digitalTools} onToggle={v => toggleMultiSelect('digitalTools', v)} />
-                <FormSelect label="What do you use to work?" value={formData.readiness.primaryDevice} onChange={v => updateField('primaryDevice', v)} options={['Smartphone', 'Laptop', 'Tablet', 'Paper-only']} />
+                <ChipGroup label="Billing & Invoicing Method" options={['Manual Carbon-copy', 'WhatsApp Message', 'Digital Payment Link', 'Thermal Printer', 'None']} selected={formData.readiness.invoicingMethod} onToggle={v => toggleMultiSelect('invoicingMethod', v)} />
+                <ChipGroup label="Current Digital Stack" options={['WhatsApp', 'Instagram', 'Excel', 'Paystack', 'Odoo', 'Canva']} selected={formData.readiness.digitalTools} onToggle={v => toggleMultiSelect('digitalTools', v)} />
+                <FormSelect label="Primary Workflow Device" value={formData.readiness.primaryDevice} onChange={v => updateField('primaryDevice', v)} options={['Smartphone', 'Laptop/Desktop', 'Tablet', 'Analog Only']} />
               </div>
             </div>
           )}
@@ -151,18 +156,18 @@ const ReadinessForm: React.FC<ReadinessFormProps> = ({ onSubmit, onCancel }) => 
           {step === 5 && (
             <div className="space-y-10 animate-in fade-in slide-in-from-right-6">
               <div className="space-y-2">
-                <h3 className="text-3xl font-black text-gray-900">5. The Headache</h3>
-                <p className="text-gray-500 font-medium text-sm">Where are you struggling the most?</p>
+                <h3 className="text-3xl font-black text-gray-900">5. Risk & Vulnerability</h3>
+                <p className="text-gray-500 font-medium text-sm">Where does the manual process break down most frequently?</p>
               </div>
               <div className="space-y-8">
-                <ChipGroup label="Where do mistakes happen?" options={['Staff typing wrong info', 'Math errors', 'Wrong delivery address', 'Missing products', 'Owner is too busy']} selected={formData.readiness.errorSource} onToggle={v => toggleMultiSelect('errorSource', v)} />
+                <ChipGroup label="Primary Source of Operational Error" options={['Staff data-entry', 'Mathematical errors', 'Logistics/Delivery', 'Inventory Leakage', 'Executive Bandwidth']} selected={formData.readiness.errorSource} onToggle={v => toggleMultiSelect('errorSource', v)} />
                 <FormInputWithSuggestions 
-                  label="Your biggest business frustration?" 
+                  label="Critical Business Pain-Point" 
                   value={formData.readiness.biggestFrustration} 
                   onChange={v => updateField('biggestFrustration', v)} 
-                  suggestions={['Staff reliability', 'Running out of time', 'Losing my records', 'Customer debt', 'High costs']} 
+                  suggestions={['Staff reliability', 'Temporal inefficiency', 'Data fragmentation', 'Customer delinquency', 'High overheads']} 
                 />
-                <ChipGroup label="What breaks if you get 50 more customers today?" options={['Customer Service', 'Delivery', 'Stock/Inventory', 'My Health', 'Staff Management']} selected={formData.readiness.breakPoint} onToggle={v => toggleMultiSelect('breakPoint', v)} />
+                <ChipGroup label="Scaling Blockers (If volume doubles tomorrow)" options={['Customer Support', 'Logistics/Fulfillment', 'Inventory Control', 'Personal Burnout', 'Managerial Oversight']} selected={formData.readiness.breakPoint} onToggle={v => toggleMultiSelect('breakPoint', v)} />
               </div>
             </div>
           )}
@@ -171,16 +176,16 @@ const ReadinessForm: React.FC<ReadinessFormProps> = ({ onSubmit, onCancel }) => 
             <div className="space-y-10 animate-in fade-in zoom-in-95">
               <div className="text-center space-y-6 py-8">
                 <div className="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-3xl mx-auto shadow-inner">📊</div>
-                <h3 className="text-3xl font-black text-gray-900">Finished!</h3>
-                <p className="text-gray-500 max-w-sm mx-auto font-medium">We are ready to show you how to fix your business.</p>
+                <h3 className="text-3xl font-black text-gray-900 uppercase tracking-tighter">Audit Complete.</h3>
+                <p className="text-gray-500 max-w-sm mx-auto font-medium">Ready to review your Strategic Automation Roadmap.</p>
               </div>
               <div className="grid md:grid-cols-2 gap-8 max-w-2xl mx-auto">
-                <FormSelect label="Budget for Automation" value={formData.readiness.investmentLevel} onChange={v => updateField('investmentLevel', v)} options={['Small Budget', 'Medium Budget', 'Enterprise (Big)', 'I just want to start']} />
+                <FormSelect label="Automation Allocation Budget" value={formData.readiness.investmentLevel} onChange={v => updateField('investmentLevel', v)} options={['Strategic (Low)', 'Operational (Mid)', 'Enterprise (High)', 'Experimental']} />
                 <FormInputWithSuggestions 
-                  label="If you could fix ONE thing now?" 
+                  label="Priority Automation Target" 
                   value={formData.readiness.autoWish} 
                   onChange={v => updateField('autoWish', v)} 
-                  suggestions={['Daily sales report', 'Making receipts', 'Stock alerts', 'Debt reminders']} 
+                  suggestions={['Real-time reporting', 'Digital invoicing', 'Smart alerts', 'Debt automation']} 
                 />
               </div>
             </div>
@@ -196,7 +201,7 @@ const ReadinessForm: React.FC<ReadinessFormProps> = ({ onSubmit, onCancel }) => 
             disabled={step === 1 && (!formData.businessName || !formData.phoneNumber)}
             className="px-12 py-5 bg-gray-900 text-white rounded-2xl font-black text-sm shadow-xl hover:bg-emerald-600 disabled:opacity-20 transition-all hover:scale-105"
           >
-            {step === totalSteps ? 'Show My Results →' : 'Continue'}
+            {step === totalSteps ? 'Finalize Strategic Audit →' : 'Continue'}
           </button>
         </div>
       </div>

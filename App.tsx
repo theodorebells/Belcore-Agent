@@ -14,6 +14,7 @@ import Services from './components/Services';
 import Contact from './components/Contact';
 import AIAgents from './components/AIAgents';
 import ErrorProofing from './components/ErrorProofing';
+import AIChatbot from './components/AIChatbot';
 
 const STORAGE_KEY = 'belcore_ph_official_v2';
 
@@ -72,6 +73,11 @@ const App: React.FC = () => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(submissions));
   }, [submissions]);
 
+  // Global instantaneous scroll to top on navigation
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }, [activeSection]);
+
   const handleReadinessSubmit = (entry: any) => {
     const submission: SMESubmission = {
       ...entry,
@@ -99,8 +105,13 @@ const App: React.FC = () => {
     <div className="min-h-screen bg-[#FDFDFD] flex flex-col font-['Inter'] selection:bg-emerald-100 selection:text-emerald-900">
       <Header activeSection={activeSection} onNavigate={setActiveSection} />
 
-      <main className="flex-grow container mx-auto px-4 py-8 max-w-6xl">
-        {activeSection === AppSection.HOME && <Home onStart={() => setActiveSection(AppSection.READINESS)} />}
+      <main className="flex-grow container mx-auto px-4 py-6 sm:py-12 max-w-6xl">
+        {activeSection === AppSection.HOME && (
+          <Home 
+            onStart={() => setActiveSection(AppSection.READINESS)} 
+            onSeeMoreAgents={() => setActiveSection(AppSection.AGENTS)} 
+          />
+        )}
         
         {activeSection === AppSection.READINESS && (
           <ReadinessForm 
@@ -135,20 +146,22 @@ const App: React.FC = () => {
         )}
       </main>
 
-      <footer className="bg-white border-t py-20 px-4">
-        <div className="max-w-4xl mx-auto flex flex-col md:flex-row justify-between items-center gap-12">
+      <footer className="bg-white border-t py-12 sm:py-24 px-4">
+        <div className="max-w-4xl mx-auto flex flex-col md:flex-row justify-between items-center gap-10 sm:gap-12">
           <div className="text-center md:text-left space-y-3">
-            <p className="font-black text-gray-900 uppercase tracking-tighter text-3xl">BELCORE <span className="text-emerald-600">CAPITAL</span></p>
+            <p className="font-black text-gray-900 uppercase tracking-tighter text-2xl sm:text-3xl">BELCORE <span className="text-emerald-600">CAPITAL</span></p>
             <div className="space-y-1">
-              <p className="text-[11px] font-black text-gray-400 uppercase tracking-[0.2em]">Registration RC: 9165301</p>
-              <p className="text-[11px] font-black text-gray-400 uppercase tracking-[0.2em]">Regional Branches: Lagos | PH | Abuja | Bayelsa</p>
+              <p className="text-[10px] sm:text-[11px] font-black text-gray-400 uppercase tracking-[0.2em]">Registration RC: 9165301</p>
+              <p className="text-[10px] sm:text-[11px] font-black text-gray-400 uppercase tracking-[0.2em]">Regional Branches: Lagos | PH | Abuja</p>
             </div>
           </div>
-          <div className="text-center md:text-right text-[10px] font-bold text-gray-300 uppercase tracking-[0.4em] leading-relaxed">
-            Software Development • Business Automation • Intranet Design<br/>Helping 400+ Nigerian SMEs Scale Securely.
+          <div className="text-center md:text-right text-[9px] sm:text-[10px] font-bold text-gray-300 uppercase tracking-[0.4em] leading-relaxed max-w-sm">
+            Strategic Software Engineering • Business Automation • Enterprise Intranet<br/>Powering 400+ Nigerian SMEs with Modern Efficiency.
           </div>
         </div>
       </footer>
+
+      <AIChatbot />
     </div>
   );
 };

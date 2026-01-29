@@ -18,23 +18,26 @@ const Header: React.FC<HeaderProps> = ({ activeSection, onNavigate }) => {
   ];
 
   return (
-    <nav className="bg-white/90 backdrop-blur-md border-b sticky top-0 z-50">
+    <nav className="bg-white/95 backdrop-blur-lg border-b sticky top-0 z-[100] shadow-sm">
       <div className="container mx-auto px-4 max-w-6xl">
-        <div className="flex flex-col sm:flex-row justify-between items-center py-3 sm:py-5 gap-4">
-          <div className="flex items-center space-x-3 cursor-pointer group self-start sm:self-auto" onClick={() => onNavigate(AppSection.HOME)}>
-            <div className="bg-gray-900 text-white font-black w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center rounded-xl transition-all group-hover:bg-emerald-600 shadow-lg shadow-emerald-500/20">B</div>
-            <div>
-              <h1 className="text-sm sm:text-lg font-black tracking-tighter text-gray-900 leading-none">BELCORE <span className="text-emerald-600">SME</span></h1>
-              <p className="text-[7px] sm:text-[9px] font-bold text-gray-400 uppercase tracking-widest">Automation Solutions</p>
+        <div className="flex flex-col sm:flex-row justify-between items-center py-2 sm:py-4 gap-2 sm:gap-4">
+          <div 
+            className="flex items-center space-x-2 sm:space-x-3 cursor-pointer group self-center sm:self-auto py-1 sm:py-0" 
+            onClick={() => onNavigate(AppSection.HOME)}
+          >
+            <div className="bg-gray-900 text-white font-black w-7 h-7 sm:w-10 sm:h-10 flex items-center justify-center rounded-lg sm:rounded-xl transition-all group-hover:bg-emerald-600 shadow-lg shadow-emerald-500/10">B</div>
+            <div className="flex flex-col">
+              <h1 className="text-xs sm:text-lg font-black tracking-tighter text-gray-900 leading-none">BELCORE <span className="text-emerald-600">SME</span></h1>
+              <p className="text-[6px] sm:text-[9px] font-bold text-gray-400 uppercase tracking-[0.15em]">Automation Experts</p>
             </div>
           </div>
 
-          <div className="flex items-center space-x-1 overflow-x-auto w-full sm:w-auto no-scrollbar pb-2 sm:pb-0">
+          <div className="flex items-center space-x-1 overflow-x-auto w-full sm:w-auto no-scrollbar pb-2 sm:pb-0 justify-center sm:justify-end">
             {navItems.map((item) => (
               <button
                 key={item.id}
                 onClick={() => onNavigate(item.id)}
-                className={`px-3 py-2 rounded-lg text-[9px] sm:text-[10px] font-black transition-all whitespace-nowrap ${
+                className={`px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-lg text-[9px] sm:text-[11px] font-black transition-all whitespace-nowrap uppercase tracking-widest ${
                   activeSection === item.id
                     ? 'bg-gray-900 text-white shadow-md'
                     : 'text-gray-500 hover:text-gray-900 hover:bg-gray-50'

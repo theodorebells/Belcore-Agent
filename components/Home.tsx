@@ -2,213 +2,227 @@
 import React, { useState } from 'react';
 import { AUTOMATION_SOLUTIONS, AutomationSolution } from '../constants';
 
-const Home: React.FC<{ onStart: () => void }> = ({ onStart }) => {
+const Home: React.FC<{ onStart: () => void; onSeeMoreAgents?: () => void }> = ({ onStart, onSeeMoreAgents }) => {
   const [selectedSolution, setSelectedSolution] = useState<AutomationSolution | null>(null);
 
   return (
-    <div className="space-y-20 sm:space-y-32 py-6 sm:py-12 px-4 sm:px-0">
-      {/* 1. Hero Section */}
-      <div className="max-w-4xl mx-auto text-center space-y-6 sm:space-y-10 animate-in fade-in slide-in-from-top-10 duration-1000">
-        <div className="inline-block px-4 py-2 bg-emerald-50 border border-emerald-100 rounded-full text-emerald-700 text-[8px] sm:text-[10px] font-black tracking-[0.2em] uppercase">
-          Proudly Nigerian • RC: 9165301
+    <div className="space-y-20 sm:space-y-32 py-6 sm:py-16 px-2 sm:px-0 overflow-visible">
+      {/* 1. Hero Section - Balanced Typography */}
+      <div className="max-w-5xl mx-auto text-center space-y-8 sm:space-y-12 animate-in fade-in slide-in-from-top-10 duration-1000">
+        <div className="inline-block px-5 py-2 bg-emerald-50 border border-emerald-100 rounded-full text-emerald-700 text-[9px] sm:text-[11px] font-black tracking-[0.25em] uppercase shadow-sm">
+          Enterprise Solutions for Emerging Markets • RC: 9165301
         </div>
-        <h2 className="text-4xl sm:text-6xl md:text-8xl font-black text-gray-900 leading-[1.1] sm:leading-[0.9] tracking-tighter mx-auto">
-          Scale Your Business Without the <span className="text-emerald-600">Stress.</span>
+        <h2 className="text-4xl sm:text-5xl md:text-7xl font-black text-gray-900 leading-[1.1] sm:leading-[1.05] tracking-tighter mx-auto max-w-4xl px-4">
+          Transform Your SME Into a <span className="text-emerald-600">Digital Powerhouse.</span>
         </h2>
-        <p className="text-base sm:text-xl md:text-2xl text-gray-500 leading-relaxed max-w-2xl mx-auto font-medium">
-          Running a business in Nigeria is a lot of work. Your records shouldn't be part of the wahala. <span className="text-gray-900 font-bold">BELCORE</span> makes your daily work easy and digital.
+        <p className="text-base sm:text-lg md:text-xl text-gray-500 leading-relaxed max-w-2xl mx-auto font-medium px-6">
+          Eliminate operational friction and manual record-keeping. <span className="text-gray-900 font-bold">BELCORE CAPITAL LTD</span> deploys strategic automation frameworks designed specifically for the Nigerian business landscape.
         </p>
-        <div className="flex flex-col gap-6 justify-center items-center">
+        <div className="flex flex-col gap-8 justify-center items-center px-4">
           <button 
             onClick={onStart}
-            className="bg-emerald-600 hover:bg-emerald-700 text-white font-black py-5 sm:py-6 px-10 sm:px-16 rounded-2xl sm:rounded-3xl shadow-2xl shadow-emerald-200 transition-all hover:scale-105 active:scale-95 text-lg sm:text-xl w-full sm:w-auto"
+            className="bg-emerald-600 hover:bg-emerald-700 text-white font-black py-4 sm:py-6 px-10 sm:px-20 rounded-2xl sm:rounded-[2rem] shadow-2xl shadow-emerald-200 transition-all hover:scale-105 active:scale-95 text-lg sm:text-xl w-full sm:w-auto"
           >
-            Check My Business Health
+            Initiate Business Audit
           </button>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-4">
             <div className="flex -space-x-3">
               {[1,2,3,4].map(i => (
-                <div key={i} className="w-8 h-8 sm:w-12 sm:h-12 rounded-full border-2 sm:border-4 border-white bg-gray-200 flex items-center justify-center text-xs font-black overflow-hidden shadow-sm">
-                  <img src={`https://i.pravatar.cc/150?u=${i+25}`} alt="user" />
+                <div key={i} className="w-9 h-9 sm:w-12 sm:h-12 rounded-full border-2 sm:border-4 border-white bg-gray-200 flex items-center justify-center text-xs font-black overflow-hidden shadow-lg">
+                  <img src={`https://i.pravatar.cc/150?u=${i+145}`} alt="user" />
                 </div>
               ))}
-              <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-full border-2 sm:border-4 border-white bg-emerald-500 text-white flex items-center justify-center text-[8px] sm:text-[10px] font-black shadow-sm">+400</div>
+              <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-full border-2 sm:border-4 border-white bg-emerald-500 text-white flex items-center justify-center text-[9px] sm:text-xs font-black shadow-lg">+400</div>
             </div>
-            <p className="text-[10px] sm:text-xs font-bold text-gray-400 uppercase tracking-widest">SMEs Automated</p>
+            <div className="text-left">
+               <p className="text-[9px] sm:text-[11px] font-black text-gray-900 uppercase tracking-widest leading-none mb-1">SMEs Optimized</p>
+               <p className="text-[8px] sm:text-[10px] font-bold text-emerald-600">Lagos | Port Harcourt | Abuja</p>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* 2. The Struggle: The Chef Dele Story */}
-      <div className="max-w-5xl mx-auto space-y-12 sm:space-y-16">
+      {/* 2. Business Challenges - Focused on Operational Gaps */}
+      <div className="max-w-7xl mx-auto space-y-12 sm:space-y-16 px-4 overflow-visible">
         <div className="text-center space-y-4">
-          <h3 className="text-3xl sm:text-4xl md:text-5xl font-black text-gray-900 leading-tight tracking-tighter">The Struggle is Real</h3>
-          <p className="text-gray-500 text-sm sm:text-lg max-w-2xl mx-auto font-medium leading-relaxed">Paper and pens are slowing you down and costing you money.</p>
-        </div>
-
-        <div className="bg-red-50/50 border border-red-100 rounded-[30px] sm:rounded-[50px] p-6 sm:p-14 grid md:grid-cols-12 gap-8 sm:gap-12 items-center shadow-inner">
-           <div className="md:col-span-5 space-y-4 sm:space-y-6 text-center md:text-left">
-              <div className="w-14 h-14 sm:w-20 sm:h-20 bg-white rounded-2xl sm:rounded-3xl shadow-xl flex items-center justify-center text-3xl sm:text-4xl mx-auto md:mx-0">🍲</div>
-              <h4 className="text-2xl sm:text-3xl font-black text-gray-900 leading-tight">The Story of <br/><span className="text-red-600">Chef Dele</span></h4>
-              <p className="text-[8px] sm:text-sm font-black text-red-400 uppercase tracking-widest">A True Buka Experience</p>
-           </div>
-           <div className="md:col-span-7 space-y-4 sm:space-y-6">
-              <p className="text-base sm:text-lg text-gray-700 leading-relaxed font-medium italic">
-                "Dele runs a popular restaurant in Lagos. Last Monday at 1 PM, his shop was full. Waiters were screaming orders. They wrote everything on small greasy pieces of paper. Dele cooked a ₦12,000 catfish pepper soup, but the waiter lost the paper ticket. The customer finished eating and left because nobody asked for the money. Dele lost the cost of the fish, the gas, and his profit—all because of one tiny piece of paper."
-              </p>
-              <div className="pt-4 border-t border-red-100">
-                <p className="text-xs sm:text-sm font-bold text-gray-900">This happens to thousands of Nigerian food sellers every day. Greasy paper is not a safe way to keep your money.</p>
-              </div>
-           </div>
+          <p className="text-red-500 font-black text-[11px] uppercase tracking-[0.3em]">The Opportunity Cost</p>
+          <h3 className="text-3xl sm:text-4xl md:text-5xl font-black text-gray-900 leading-tight tracking-tighter">Operational Integrity Gaps.</h3>
+          <p className="text-gray-500 text-base sm:text-lg max-w-2xl mx-auto font-medium">Manual processes are the silent killers of African business growth. We identify and seal these leaks.</p>
         </div>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8">
-          <StruggleCard icon="📄" title="Lost Papers" desc="Tickets get lost or thrown in the bin. If the paper is gone, your money is gone." />
-          <StruggleCard icon="🧮" title="Math Wahala" desc="Adding up 50 orders by hand leads to mistakes. Staff might even short-change you." />
-          <StruggleCard icon="😴" title="Owner Burnout" desc="You can't even rest because if you're not there to watch the cash, things disappear." />
-          <StruggleCard icon="🤝" title="Trust Issues" desc="Asking customers 'what did you eat again?' makes your business look disorganized." />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <StruggleCard icon="📄" title="Record Volatility" desc="Paper logs are fragile and easily misplaced. If the physical record vanishes, the revenue vanishes with it." />
+          <StruggleCard icon="🧮" title="Accounting Errors" desc="Manual tallies lead to arithmetic mistakes and inventory leakage. Discrepancies cost SMEs millions annually." />
+          <StruggleCard icon="🥱" title="Micro-Management" desc="Business owners become 'human logs,' unable to scale because they are tied to constant manual oversight." />
+          <StruggleCard icon="🤝" title="Brand Erosion" desc="Disorganized processes reduce customer trust. Professional automation ensures every client feels valued." />
         </div>
       </div>
 
-      {/* 3. Why BELCORE Started - The Origin Section */}
-      <div className="max-w-6xl mx-auto">
-        <div className="bg-emerald-600 rounded-[30px] sm:rounded-[60px] p-8 sm:p-20 text-white grid lg:grid-cols-2 gap-10 sm:gap-16 items-center shadow-3xl">
-           <div className="space-y-6 sm:space-y-8">
-              <div className="inline-block px-4 py-1.5 bg-white/10 rounded-full text-[8px] sm:text-[10px] font-black uppercase tracking-widest border border-white/20">Our Purpose</div>
-              <h3 className="text-3xl sm:text-5xl font-black leading-tight sm:leading-[0.9] tracking-tighter">Why We Started.</h3>
-              <p className="text-base sm:text-xl opacity-80 leading-relaxed font-medium">
-                We saw too many hard-working Nigerians working like elephants but eating like ants. You spend 12 hours a day at work, but at the end of the month, you don't know where the money went.
+      {/* 3. The Vision: Founders Context */}
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="bg-gray-900 rounded-[40px] sm:rounded-[70px] p-8 sm:p-20 text-white grid lg:grid-cols-2 gap-12 sm:gap-20 items-center shadow-3xl">
+           <div className="space-y-8 sm:space-y-10">
+              <div className="inline-block px-5 py-2 bg-emerald-500/10 rounded-full text-[10px] font-black uppercase tracking-widest border border-emerald-500/20 text-emerald-400">Our Strategic Intent</div>
+              <h3 className="text-3xl sm:text-5xl font-black leading-tight tracking-tighter">Digitizing the <br/>African Economy.</h3>
+              <p className="text-base sm:text-xl opacity-70 leading-relaxed font-medium">
+                We founded BELCORE to bridge the gap between traditional grit and modern efficiency. We believe African founders deserve systems that match their ambition.
               </p>
-              <div className="space-y-3 sm:space-y-4 pt-4 text-xs sm:text-base">
-                 <div className="flex gap-4 items-center">
-                    <div className="w-8 h-8 sm:w-10 sm:h-10 bg-white/10 rounded-lg flex items-center justify-center">💡</div>
-                    <p className="font-bold">Replace messy notebooks with simple digital systems.</p>
-                 </div>
-                 <div className="flex gap-4 items-center">
-                    <div className="w-8 h-8 sm:w-10 sm:h-10 bg-white/10 rounded-lg flex items-center justify-center">🛡️</div>
-                    <p className="font-bold">Protect your profit from staff theft and math errors.</p>
-                 </div>
-                 <div className="flex gap-4 items-center">
-                    <div className="w-8 h-8 sm:w-10 sm:h-10 bg-white/10 rounded-lg flex items-center justify-center">🌍</div>
-                    <p className="font-bold">Help local SMEs grow into big national brands.</p>
-                 </div>
+              <div className="space-y-5 pt-4">
+                 <OriginPoint icon="⚡" text="Replacing analog chaos with cloud-synchronized stability." />
+                 <OriginPoint icon="🛡️" text="Hardening SMEs against internal leakage and financial errors." />
+                 <OriginPoint icon="📈" text="Empowering the next generation of conglomerates." />
               </div>
            </div>
-           <div className="bg-white/5 border border-white/10 p-6 sm:p-10 rounded-[30px] sm:rounded-[50px] space-y-6 sm:space-y-8 backdrop-blur-sm">
-              <p className="text-lg sm:text-2xl font-medium italic opacity-90 leading-relaxed">
-                "Our technology is not for experts. It is for the person selling bread, the person running a boutique, and the person cooking soup. We built BELCORE so you can focus on your skill while we handle the boring digital stuff."
+           <div className="bg-white/5 border border-white/10 p-8 sm:p-12 rounded-[40px] space-y-8 backdrop-blur-xl relative group">
+              <div className="absolute -top-10 -left-10 w-32 h-32 bg-emerald-500 rounded-full blur-[80px] opacity-20 group-hover:opacity-40 transition-opacity"></div>
+              <p className="text-lg sm:text-2xl font-medium italic opacity-90 leading-relaxed tracking-tight">
+                "Automation isn't a luxury; it's the foundation of modern commerce. We build for the artisan, the merchant, and the industrialist."
               </p>
-              <div className="flex items-center gap-4">
-                 <div className="w-12 h-12 sm:w-16 sm:h-16 bg-white rounded-xl sm:rounded-2xl flex items-center justify-center text-gray-900 font-black text-xl sm:text-2xl">B</div>
+              <div className="flex items-center gap-5">
+                 <div className="w-12 h-12 sm:w-16 sm:h-16 bg-emerald-600 rounded-2xl flex items-center justify-center text-white font-black text-xl sm:text-2xl shadow-2xl">B</div>
                  <div>
-                    <p className="font-black text-sm sm:text-lg">BELCORE CAPITAL LTD</p>
-                    <p className="text-[7px] sm:text-[10px] font-black uppercase tracking-widest opacity-60">Founded in Nigeria, for Nigerians</p>
+                    <p className="font-black text-lg sm:text-xl">BELCORE CAPITAL</p>
+                    <p className="text-[9px] sm:text-[10px] font-black uppercase tracking-widest opacity-40">RC: 9165301 • PH HQ</p>
                  </div>
               </div>
            </div>
         </div>
       </div>
 
-      {/* 4. What We Automate - INTERACTIVE */}
-      <div className="space-y-12 sm:space-y-16">
-        <div className="text-center max-w-2xl mx-auto space-y-4">
-          <h3 className="text-3xl sm:text-5xl font-black text-gray-900 tracking-tighter">How We Fix It</h3>
-          <p className="text-gray-500 text-sm sm:text-base font-medium">We give you "Digital Assistants" that work 24/7. Click a box below.</p>
+      {/* 4. Strategic Automation: Balanced Font Sizes */}
+      <div className="space-y-16 sm:space-y-24 px-4">
+        <div className="text-center max-w-3xl mx-auto space-y-6">
+          <p className="text-emerald-600 font-black text-[11px] uppercase tracking-[0.3em]">The Technical Framework</p>
+          <h3 className="text-3xl sm:text-4xl md:text-5xl font-black text-gray-900 tracking-tighter">Operational Efficiency.</h3>
+          <p className="text-gray-500 text-lg sm:text-xl font-medium">Select a core module to explore deployment specs and ROI metrics.</p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 sm:gap-8 max-w-[95rem] mx-auto">
            {AUTOMATION_SOLUTIONS.map((solution, idx) => (
              <button 
                 key={idx}
                 onClick={() => setSelectedSolution(solution)}
-                className={`text-left p-6 sm:p-8 bg-white border rounded-[30px] sm:rounded-[40px] transition-all group shadow-sm flex flex-col h-full hover:border-emerald-500 hover:shadow-xl hover:-translate-y-2 ${selectedSolution?.title === solution.title ? 'border-emerald-500 ring-4 ring-emerald-50' : 'border-gray-100'}`}
+                className={`text-left p-8 sm:p-10 bg-white border rounded-[40px] transition-all group shadow-sm flex flex-col h-full hover:border-emerald-500 hover:shadow-2xl hover:-translate-y-3 ${selectedSolution?.title === solution.title ? 'border-emerald-500 ring-4 ring-emerald-50' : 'border-gray-100'}`}
              >
                 <div className="flex justify-between items-start mb-6 w-full">
-                  <span className="text-2xl sm:text-3xl bg-gray-50 w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl flex items-center justify-center group-hover:bg-emerald-50 transition-colors">{solution.icon}</span>
-                  <div className="px-3 py-1 bg-emerald-50 rounded-full text-[8px] font-black text-emerald-600 uppercase tracking-widest">{solution.tag}</div>
+                  <span className="text-3xl bg-gray-50 w-16 h-16 rounded-[22px] flex items-center justify-center group-hover:bg-emerald-50 transition-all shadow-inner">{solution.icon}</span>
+                  <div className="px-3 py-1 bg-emerald-50 rounded-full text-[9px] font-black text-emerald-600 uppercase tracking-widest">{solution.tag}</div>
                 </div>
-                <h4 className="text-lg font-black text-gray-900 mb-2">{solution.title}</h4>
-                <p className="text-xs text-gray-500 leading-relaxed font-medium mb-6">{solution.desc}</p>
-                <div className="mt-auto pt-4 flex items-center gap-2 text-[10px] font-black text-emerald-600 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
-                   Learn More <span>→</span>
+                <h4 className="text-lg sm:text-xl font-black text-gray-900 mb-3 leading-tight">{solution.title}</h4>
+                <p className="text-[13px] sm:text-sm text-gray-500 leading-relaxed font-medium mb-8 flex-grow">{solution.desc}</p>
+                <div className="pt-4 flex items-center gap-2 text-[10px] font-black text-emerald-600 uppercase tracking-widest opacity-60 group-hover:opacity-100 transition-all">
+                   Technical Specs <span className="text-base">→</span>
                 </div>
              </button>
            ))}
+
+           {/* Much More Card */}
+           <button 
+              onClick={onSeeMoreAgents}
+              className="text-center p-8 sm:p-10 bg-gray-900 border border-gray-800 rounded-[40px] transition-all group shadow-2xl flex flex-col h-full hover:-translate-y-3 justify-center items-center space-y-8 relative overflow-hidden"
+           >
+              <div className="absolute inset-0 bg-emerald-600/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white/10 rounded-full flex items-center justify-center text-5xl shadow-2xl group-hover:scale-110 transition-transform relative z-10">💼</div>
+              <div className="relative z-10 space-y-3">
+                <h4 className="text-lg sm:text-xl font-black text-white tracking-tight uppercase leading-tight">...and more</h4>
+                <p className="text-[10px] text-gray-400 leading-relaxed font-bold px-4">Explore our full suite of digital agents.</p>
+              </div>
+              <div className="px-6 py-2.5 bg-emerald-600 text-white rounded-2xl text-[10px] font-black uppercase tracking-widest group-hover:bg-emerald-500 transition-colors relative z-10">
+                 Meet the Force
+              </div>
+           </button>
         </div>
 
-        {/* Selected Detail View */}
+        {/* Modal Detail Popup */}
         {selectedSolution && (
-          <div className="max-w-4xl mx-auto bg-gray-900 rounded-[30px] sm:rounded-[50px] p-6 sm:p-16 text-white animate-in zoom-in-95 duration-500 shadow-3xl relative overflow-hidden">
-             <div className="absolute top-0 right-0 p-10 opacity-10 pointer-events-none hidden sm:block">
-                <span className="text-[200px] font-black">{selectedSolution.icon}</span>
-             </div>
-             <button onClick={() => setSelectedSolution(null)} className="absolute top-6 right-6 sm:top-10 sm:right-10 w-10 h-10 sm:w-12 sm:h-12 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-all font-bold">✕</button>
+          <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 sm:p-8 animate-in fade-in duration-300">
+             <div className="absolute inset-0 bg-black/85 backdrop-blur-md" onClick={() => setSelectedSolution(null)} />
              
-             <div className="relative z-10 space-y-8 sm:space-y-10">
-                <div className="space-y-3 sm:space-y-4">
-                   <p className="text-emerald-400 font-black uppercase tracking-[0.4em] text-[10px] sm:text-xs">Deep Dive: {selectedSolution.title}</p>
-                   <h4 className="text-3xl sm:text-5xl font-black tracking-tighter">{selectedSolution.title}</h4>
-                </div>
+             <div className="bg-white rounded-[40px] p-8 sm:p-16 md:p-20 text-gray-900 max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-3xl relative overflow-hidden animate-in zoom-in-95 duration-500 border border-gray-100">
+                <button 
+                  onClick={() => setSelectedSolution(null)} 
+                  className="absolute top-8 right-8 w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200 transition-all font-bold z-20 text-gray-500"
+                >
+                  ✕
+                </button>
                 
-                <div className="grid md:grid-cols-2 gap-8 sm:gap-12">
-                   <div className="space-y-3 sm:space-y-4">
-                      <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">In Simple Terms</p>
-                      <p className="text-base sm:text-lg font-medium leading-relaxed italic text-emerald-50">"{selectedSolution.example}"</p>
+                <div className="relative z-10 space-y-10">
+                   <div className="space-y-4">
+                      <p className="text-emerald-600 font-black uppercase tracking-[0.5em] text-[10px] sm:text-xs">Metrics: {selectedSolution.tag}</p>
+                      <h4 className="text-3xl sm:text-5xl font-black tracking-tighter text-gray-900">{selectedSolution.title}</h4>
                    </div>
-                   <div className="space-y-3 sm:space-y-4">
-                      <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">The Belcore Method</p>
-                      <p className="text-base sm:text-lg font-medium leading-relaxed opacity-70">{selectedSolution.howItWorks}</p>
+                   
+                   <div className="grid md:grid-cols-2 gap-10 sm:gap-16">
+                      <div className="space-y-5">
+                         <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Practical Scenario</p>
+                         <p className="text-lg sm:text-2xl font-medium leading-relaxed italic text-gray-700">"{selectedSolution.example}"</p>
+                      </div>
+                      <div className="space-y-5">
+                         <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Technical Logic</p>
+                         <p className="text-lg sm:text-2xl font-medium leading-relaxed text-gray-500">{selectedSolution.howItWorks}</p>
+                      </div>
                    </div>
-                </div>
 
-                <div className="pt-8 flex flex-col sm:flex-row gap-4 items-center border-t border-white/10">
-                   <button onClick={onStart} className="w-full sm:w-auto px-10 py-5 bg-emerald-600 rounded-2xl font-black hover:bg-emerald-700 transition-all">Apply to my Business</button>
-                   <p className="text-[8px] sm:text-[10px] font-black text-gray-500 uppercase tracking-[0.2em]">Deployment time: ~72 Hours</p>
+                   <div className="pt-10 flex flex-col sm:flex-row gap-6 items-center border-t border-gray-100">
+                      <button 
+                        onClick={() => { setSelectedSolution(null); onStart(); }} 
+                        className="w-full sm:w-auto px-12 py-5 bg-emerald-600 text-white rounded-[1.5rem] font-black text-xl hover:bg-emerald-700 transition-all shadow-xl"
+                      >
+                        Initiate Strategic Audit
+                      </button>
+                      <p className="text-[11px] font-black text-gray-400 uppercase tracking-[0.3em]">Setup Time: 72 Hours</p>
+                   </div>
                 </div>
              </div>
           </div>
         )}
       </div>
 
-      {/* 5. Why Choose Belcore Section */}
-      <div className="max-w-6xl mx-auto space-y-12 sm:space-y-16">
+      {/* 5. Trust Pillars - Perfectly Balanced */}
+      <div className="max-w-7xl mx-auto space-y-16 sm:space-y-24 px-4">
         <div className="text-center space-y-4">
-           <h3 className="text-3xl sm:text-5xl font-black text-gray-900 tracking-tighter">Why Choose Belcore?</h3>
-           <p className="text-gray-500 text-sm sm:text-lg font-medium italic">We don't just sell apps. we build your business future.</p>
+           <p className="text-emerald-600 font-black text-[11px] uppercase tracking-[0.3em]">Operational Pillars</p>
+           <h3 className="text-3xl sm:text-4xl md:text-5xl font-black text-gray-900 tracking-tighter">The Belcore Advantage.</h3>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-12">
            <WhyCard 
              icon="🇳🇬" 
-             title="Built for Nigeria" 
-             desc="Lagos rush or PH network? Our tools work on low data and focus on WhatsApp, where you and your customers already live."
+             title="Localization" 
+             desc="Our frameworks are optimized for low-bandwidth environments and the unique WhatsApp-driven commerce of Nigeria."
            />
            <WhyCard 
              icon="🏢" 
-             title="Physical Presence" 
-             desc="Real offices in Port Harcourt and Lagos. If you have any issues, call us or visit us. We are real people, not ghosts."
+             title="Accountability" 
+             desc="Strategic presence in Port Harcourt and Lagos. We offer on-site consultation and training for all enterprise deployments."
            />
            <WhyCard 
              icon="🤝" 
-             title="Total Support" 
-             desc="We don't just build and leave. Our team will train your staff and stay with you until everything is running perfectly."
+             title="Management" 
+             desc="We provide continuous system optimization, staff training, and technical support to ensure your long-term success."
            />
         </div>
       </div>
 
-      {/* 6. Final Call to Action */}
-      <div className="text-center py-16 sm:py-24 bg-gray-900 rounded-[40px] sm:rounded-[60px] text-white shadow-3xl relative overflow-hidden mx-auto max-w-6xl">
-        <div className="absolute inset-0 bg-emerald-600/10 opacity-50"></div>
-        <div className="relative z-10 space-y-8 sm:space-y-10 px-6">
-          <h3 className="text-3xl sm:text-5xl md:text-6xl font-black mb-8 leading-tight tracking-tighter max-w-2xl mx-auto">Ready to fix your business?</h3>
-          <button 
-            onClick={onStart}
-            className="bg-white text-gray-900 font-black py-5 sm:py-7 px-12 sm:px-20 rounded-2xl sm:rounded-[2rem] shadow-2xl hover:bg-emerald-50 transition-all hover:scale-105 active:scale-95 text-xl w-full sm:w-auto"
-          >
-            Start Free Audit →
-          </button>
-          <div className="pt-4">
-            <p className="text-emerald-400 font-black uppercase tracking-[0.3em] text-[8px] sm:text-[10px]">Lagos | Abuja | Port Harcourt | Bayelsa</p>
+      {/* 6. Professional Call to Action - Reduced sizing */}
+      <div className="max-w-7xl mx-auto px-4 pb-20">
+        <div className="text-center py-20 sm:py-24 bg-gray-900 rounded-[40px] sm:rounded-[60px] text-white shadow-3xl relative overflow-hidden">
+          <div className="absolute inset-0 bg-emerald-500/5"></div>
+          <div className="relative z-10 space-y-10 px-8">
+            <h3 className="text-3xl sm:text-5xl md:text-6xl font-black mb-8 leading-tight tracking-tighter max-w-4xl mx-auto">
+              Future-Proof Your <br className="hidden sm:block" /><span className="text-emerald-500">Business Today.</span>
+            </h3>
+            <div className="flex flex-col sm:flex-row gap-6 justify-center">
+               <button 
+                 onClick={onStart}
+                 className="bg-white text-gray-900 font-black py-5 sm:py-6 px-12 sm:px-16 rounded-[1.5rem] sm:rounded-[2rem] shadow-2xl hover:bg-emerald-50 transition-all hover:scale-105 active:scale-95 text-lg sm:text-2xl w-full sm:w-auto"
+               >
+                 Launch Strategic Audit →
+               </button>
+            </div>
+            <div className="pt-8 opacity-40">
+              <p className="text-emerald-500 font-black uppercase tracking-[0.5em] text-[10px] sm:text-[11px]">Lagos | Port Harcourt | Abuja | Bayelsa | Delta</p>
+            </div>
           </div>
         </div>
       </div>
@@ -216,19 +230,26 @@ const Home: React.FC<{ onStart: () => void }> = ({ onStart }) => {
   );
 };
 
+const OriginPoint = ({ icon, text }: { icon: string, text: string }) => (
+  <div className="flex gap-5 items-center">
+    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white/10 rounded-xl flex items-center justify-center text-xl border border-white/5">{icon}</div>
+    <p className="font-bold text-sm sm:text-lg opacity-80">{text}</p>
+  </div>
+);
+
 const StruggleCard = ({ icon, title, desc }: { icon: string, title: string, desc: string }) => (
-  <div className="bg-white p-6 sm:p-8 rounded-[30px] sm:rounded-[40px] border border-gray-100 shadow-sm hover:shadow-lg transition-all text-center space-y-3 sm:space-y-4">
-    <div className="text-3xl sm:text-4xl mx-auto w-14 h-14 sm:w-16 sm:h-16 bg-red-50 rounded-2xl flex items-center justify-center">{icon}</div>
-    <h4 className="text-base sm:text-lg font-black text-gray-900">{title}</h4>
-    <p className="text-xs text-gray-500 leading-relaxed font-medium">{desc}</p>
+  <div className="bg-white p-8 sm:p-10 rounded-[35px] border border-gray-100 shadow-sm hover:shadow-2xl transition-all text-center space-y-4 sm:space-y-6 group">
+    <div className="text-4xl mx-auto w-16 h-16 sm:w-20 sm:h-20 bg-red-50 rounded-[22px] flex items-center justify-center group-hover:scale-110 transition-transform">{icon}</div>
+    <h4 className="text-lg sm:text-xl font-black text-gray-900">{title}</h4>
+    <p className="text-[12px] sm:text-sm text-gray-500 leading-relaxed font-medium">{desc}</p>
   </div>
 );
 
 const WhyCard = ({ icon, title, desc }: { icon: string, title: string, desc: string }) => (
-  <div className="bg-white p-8 sm:p-10 rounded-[30px] sm:rounded-[50px] border border-gray-100 shadow-sm hover:shadow-xl transition-all group hover:-translate-y-2 text-center flex flex-col h-full">
-    <div className="text-4xl sm:text-5xl mb-6 sm:mb-8 bg-gray-50 w-20 h-20 sm:w-24 sm:h-24 rounded-[28px] sm:rounded-[32px] flex items-center justify-center group-hover:bg-emerald-50 transition-colors mx-auto">{icon}</div>
-    <h4 className="text-xl sm:text-2xl font-black text-gray-900 mb-3 sm:mb-4 tracking-tight">{title}</h4>
-    <p className="text-xs sm:text-sm text-gray-500 leading-relaxed font-medium flex-grow">{desc}</p>
+  <div className="bg-white p-10 sm:p-14 rounded-[45px] border border-gray-100 shadow-sm hover:shadow-2xl transition-all group hover:-translate-y-4 text-center flex flex-col h-full border-b-4 border-b-emerald-500/10 hover:border-b-emerald-500 transition-colors items-center">
+    <div className="text-5xl sm:text-6xl mb-8 bg-gray-50 w-20 h-20 sm:w-28 sm:h-28 rounded-[35px] flex items-center justify-center group-hover:bg-emerald-50 transition-colors mx-auto shadow-inner shrink-0">{icon}</div>
+    <h4 className="text-xl sm:text-2xl font-black text-gray-900 mb-4 tracking-tight text-center w-full leading-tight">{title}</h4>
+    <p className="text-sm sm:text-base text-gray-500 leading-relaxed font-medium flex-grow text-center w-full">{desc}</p>
   </div>
 );
 

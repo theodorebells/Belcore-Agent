@@ -6,28 +6,28 @@ const AIAgents: React.FC<{ onNext: () => void }> = ({ onNext }) => {
 
   const agents = [
     {
-      title: "Software Agent",
+      title: "Software Specialist",
       role: "Workflow Automation",
       icon: "💻",
       desc: "Our core ICT engine. Replicates your best office staff. Records sales, updates stock, and generates receipts instantly across all devices.",
       features: ["Custom Code Logic", "Secure Cloud Sync", "Multi-user Access"]
     },
     {
-      title: "Marketing Agent",
+      title: "Growth Consultant",
       role: "Lead Conversion",
-      icon: "📢",
+      icon: "👔",
       desc: "Captures 'Price?' comments on Instagram and turning them into real sales leads on your dashboard before the customer loses interest.",
       features: ["Auto-Lead Capture", "WhatsApp API Integration", "Campaign Tracking"]
     },
     {
-      title: "Audit Agent",
+      title: "Risk Strategist",
       role: "Security & Fraud",
       icon: "🛡️",
       desc: "The digital watchdog for your SME. Flags suspicious discounts, stock theft, and cash mismatches in real-time, sending alerts to your phone.",
       features: ["Theft Detection", "Daily Profit Audit", "Anomaly Alerts"]
     },
     {
-      title: "Support Agent",
+      title: "Client Manager",
       role: "Relationship CRM",
       icon: "🤝",
       desc: "Handles the follow-up work you are too busy to do. Sends 'Thank You' notes, payment reminders, and birthday wishes automatically.",
@@ -38,10 +38,10 @@ const AIAgents: React.FC<{ onNext: () => void }> = ({ onNext }) => {
   return (
     <div className="space-y-24 py-10 animate-in fade-in slide-in-from-bottom-10 duration-700 pb-32">
       <div className="text-center space-y-6 px-4">
-        <div className="inline-block px-4 py-1.5 bg-purple-100 text-purple-700 text-[10px] font-black rounded-full uppercase tracking-widest">Digital Workforce Simulation</div>
-        <h2 className="text-5xl md:text-7xl font-black text-gray-900 tracking-tighter leading-none">Meet Your Agents.</h2>
+        <div className="inline-block px-4 py-1.5 bg-purple-100 text-purple-700 text-[10px] font-black rounded-full uppercase tracking-widest">Digital Workforce Deployment</div>
+        <h2 className="text-5xl md:text-7xl font-black text-gray-900 tracking-tighter leading-none">Meet Your Experts.</h2>
         <p className="text-gray-500 max-w-2xl mx-auto text-xl font-medium leading-relaxed italic">
-          "BELCORE Agents don't sleep, don't ask for leave, and never make math mistakes."
+          "BELCORE Specialized Systems don't sleep, don't ask for leave, and never make math mistakes."
         </p>
       </div>
 
@@ -87,7 +87,7 @@ const AIAgents: React.FC<{ onNext: () => void }> = ({ onNext }) => {
                 onClick={onNext}
                 className="group px-16 py-7 bg-white text-gray-900 font-black rounded-3xl hover:bg-emerald-50 transition-all shadow-2xl hover:scale-105 active:scale-95 text-xl flex items-center gap-4"
                >
-                 Review Error-Proofing Guardrails <span className="text-3xl group-hover:translate-x-2 transition-transform">→</span>
+                 Review Performance Guardrails <span className="text-3xl group-hover:translate-x-2 transition-transform">→</span>
                </button>
                <p className="text-[10px] text-gray-500 font-black uppercase tracking-[0.4em]">Proprietary ICT Framework by BELCORE CAPITAL LTD</p>
             </div>
