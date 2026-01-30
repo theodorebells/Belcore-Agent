@@ -6,7 +6,7 @@ const AIChatbot: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState<{role: 'user' | 'bot', text: string}[]>([
-    { role: 'bot', text: "Welcome to BELCORE! I'm your Digital Automation Consultant. How can I help optimize your business today?" }
+    { role: 'bot', text: "Welcome to BELCORE! I'm Bella's digital strategist. How can I help optimize your business for 2026?" }
   ]);
   const [isTyping, setIsTyping] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -26,21 +26,26 @@ const AIChatbot: React.FC = () => {
     setIsTyping(true);
 
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+      const apiKey = process.env.API_KEY;
+      if (!apiKey) {
+        throw new Error("API_KEY_MISSING");
+      }
+
+      const ai = new GoogleGenAI({ apiKey });
       const prompt = `
-        You are the BELCORE Strategic Assistant. BELCORE CAPITAL LTD is a Nigerian ICT firm (RC: 9165301).
-        We specialize in:
+        You are the BELCORE Strategic Assistant, working under Bella. 
+        BELCORE CAPITAL LTD is a Nigerian ICT firm (RC: 9165301) specializing in:
         1. WhatsApp Sales Bots
         2. Automated Debt Reminders
         3. Smart Inventory Sync
         4. Digital Invoicing (PDF Engine)
 
         PERSONA:
-        - Professional, encouraging, and highly efficient.
-        - Use Nigerian business context (Naira, PH, Lagos, WhatsApp).
-        - Focus on the high cost of manual errors and paper record-keeping.
-        - Encourage them to initiate a "Strategic Business Audit" tool on our site.
-        - Keep answers professional and short (max 2-3 sentences).
+        - Professional, expert, and encouraging.
+        - Use Nigerian business context (Naira, Port Harcourt, Lagos).
+        - Focus on sealing "revenue leaks" caused by manual paper logs.
+        - Encourage them to use our "Strategic Business Audit" tool.
+        - Keep answers short and direct (max 2 sentences).
 
         User Query: ${userMsg}
       `;
@@ -50,9 +55,13 @@ const AIChatbot: React.FC = () => {
         contents: prompt,
       });
 
-      setMessages(prev => [...prev, { role: 'bot', text: response.text || "I'm sorry, I'm having a bit of trouble connecting. Please try again or reach out to our Port Harcourt office!" }]);
+      setMessages(prev => [...prev, { role: 'bot', text: response.text || "I'm having a connection issue. Please try again or visit our PH office!" }]);
     } catch (error) {
-      setMessages(prev => [...prev, { role: 'bot', text: "I'm offline for a moment. But don't worry, our engineering team is ready to help on WhatsApp!" }]);
+      console.error("Chatbot Error:", error);
+      const errorMsg = error instanceof Error && error.message === "API_KEY_MISSING" 
+        ? "I'm currently in high-security mode. Please ask the administrator to configure the API_KEY environment variable on Netlify/GitHub."
+        : "I'm currently offline. Please use our Business Audit tool or reach us on WhatsApp!";
+      setMessages(prev => [...prev, { role: 'bot', text: errorMsg }]);
     } finally {
       setIsTyping(false);
     }
@@ -60,7 +69,6 @@ const AIChatbot: React.FC = () => {
 
   return (
     <>
-      {/* Floating Button - Professional Icon */}
       <button 
         onClick={() => setIsOpen(!isOpen)}
         className="fixed bottom-6 right-6 z-[60] w-16 h-16 bg-emerald-600 text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all group border-4 border-white"
@@ -75,16 +83,15 @@ const AIChatbot: React.FC = () => {
         )}
       </button>
 
-      {/* Chat Window */}
       {isOpen && (
         <div className="fixed bottom-24 right-6 z-[60] w-[90vw] sm:w-[400px] h-[500px] bg-white rounded-[40px] shadow-3xl border border-gray-100 flex flex-col overflow-hidden animate-in slide-in-from-bottom-10">
           <div className="bg-gray-900 p-6 text-white flex items-center gap-4">
             <div className="w-10 h-10 bg-emerald-500 rounded-xl flex items-center justify-center font-black">B</div>
             <div>
-              <p className="font-black text-sm uppercase tracking-widest">Belcore Expert</p>
+              <p className="font-black text-sm uppercase tracking-widest">Belcore Strategist</p>
               <div className="flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                <p className="text-[8px] font-black uppercase tracking-widest text-emerald-400">Strategist Online</p>
+                <p className="text-[8px] font-black uppercase tracking-widest text-emerald-400">Online for 2026 Strategy</p>
               </div>
             </div>
           </div>
@@ -118,7 +125,7 @@ const AIChatbot: React.FC = () => {
                 value={input}
                 onChange={e => setInput(e.target.value)}
                 onKeyPress={e => e.key === 'Enter' && handleSend()}
-                placeholder="Ask our experts..."
+                placeholder="Ask about your industry..."
                 className="flex-grow px-5 py-3 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-emerald-500 font-medium text-sm"
               />
               <button 
