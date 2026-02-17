@@ -4,7 +4,7 @@ import React from 'react';
 const Roadmap: React.FC = () => {
   const items = [
     { year: "2024 (Current)", title: "Core Automation", desc: "Digital intake, cloud database sync, and manual WhatsApp templates.", status: "LIVE" },
-    { year: "2025-2026", title: "API Integrations", desc: "Native bank-statement reconciliation and automated Paystack/Flutterwave invoicing.", status: "PLANNED" },
+    { year: "2025-2026", title: "API Integrations", desc: "Native bank-statement reconciliation and automated Paystack/Flutterwave invoicing.", status: "PLANNING" },
     { year: "2027", title: "Predictive Intelligence", desc: "Advanced forecasting to predict when an SME will run out of inventory based on historical sales.", status: "FUTURE" },
     { year: "2028", title: "Native Voice-Commerce", desc: "Voice-based sales recording for semi-literate merchants across multiple Nigerian dialects.", status: "FUTURE" }
   ];
@@ -25,7 +25,7 @@ const Roadmap: React.FC = () => {
             <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-white p-6 rounded-3xl border border-gray-100 shadow-sm transition-all hover:shadow-xl hover:border-emerald-200">
               <div className="flex items-center justify-between space-x-2 mb-2">
                 <div className="font-black text-emerald-600">{item.year}</div>
-                <span className={`px-2 py-0.5 rounded text-[8px] font-black tracking-widest uppercase ${item.status === 'LIVE' ? 'bg-emerald-100 text-emerald-700' : 'bg-gray-100 text-gray-500'}`}>
+                <span className={`px-2 py-0.5 rounded text-[8px] font-black tracking-widest uppercase ${item.status === 'LIVE' ? 'bg-emerald-100 text-emerald-700' : (item.status === 'PLANNING' ? 'bg-blue-100 text-blue-700' : 'bg-gray-100 text-gray-500')}`}>
                   {item.status}
                 </span>
               </div>

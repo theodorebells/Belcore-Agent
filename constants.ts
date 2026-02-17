@@ -35,6 +35,14 @@ export interface AutomationSolution {
 
 export const AUTOMATION_SOLUTIONS: AutomationSolution[] = [
   {
+    title: "Automated Follow-up System",
+    desc: "Never lose a lead again. Automatically pings customers who haven't responded to quotes or completed orders.",
+    icon: "🔄",
+    tag: "Retention",
+    example: "A customer asks for a quote on Monday but doesn't buy. On Wednesday, the system sends a friendly 'We are still here for you' WhatsApp message with a tiny discount.",
+    howItWorks: "We set up a 'Last Contact' timer in your database. If it hits 48 hours without a sale, a WhatsApp trigger is fired automatically."
+  },
+  {
     title: "WhatsApp Sales Bot",
     desc: "Auto-share prices and collect orders 24/7 without you typing a single word.",
     icon: "💬",
@@ -83,14 +91,6 @@ export const AUTOMATION_SOLUTIONS: AutomationSolution[] = [
     howItWorks: "Every order triggers a data capture into a centralized database for future marketing automation."
   },
   {
-    title: "Expense Monitor",
-    desc: "Log daily expenses like fuel and repairs on your phone to see your real monthly profit.",
-    icon: "📊",
-    tag: "Finance",
-    example: "Instead of wondering where the money went, you log '₦5,000 Fuel' and see your net profit updated in real-time.",
-    howItWorks: "Expense categorization engine that reconciles with your daily sales for a true financial picture."
-  },
-  {
     title: "Multi-Location Sync",
     desc: "Manage multiple branches from one dashboard in Port Harcourt or anywhere in the world.",
     icon: "🌐",
@@ -108,15 +108,15 @@ export const WORKFLOW_COMPARISON = [
     benefit: "95% Speed Increase"
   },
   {
+    task: "Lead Follow-up",
+    manual: { process: "Scrolling through 100+ WhatsApp chats manually", time: "3 Hours/Day" },
+    automated: { process: "Belcore Follow-up Engine (Auto-Ping)", time: "0 Mins" },
+    benefit: "40% Higher Conversion"
+  },
+  {
     task: "Invoicing",
     manual: { process: "Handwritten receipt + WhatsApp photo", time: "15 Mins" },
     automated: { process: "Auto-generated PDF via Belcore Engine", time: "30 Secs" },
     benefit: "Zero math errors"
-  },
-  {
-    task: "Debt Follow-up",
-    manual: { process: "Calling one-by-one based on memory", time: "4 Hours/Week" },
-    automated: { process: "Automated WhatsApp & Email Reminders", time: "0 Mins" },
-    benefit: "Improved cash flow"
   }
 ];

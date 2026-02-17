@@ -13,14 +13,12 @@ import Roadmap from './components/Roadmap';
 import Services from './components/Services';
 import Contact from './components/Contact';
 import AIAgents from './components/AIAgents';
-import ErrorProofing from './components/ErrorProofing';
-import AIChatbot from './components/AIChatbot';
 
-const STORAGE_KEY = 'belcore_ph_official_v2';
+const STORAGE_KEY = 'belcore_ph_official_v3';
 
 const INITIAL_SME: SMESubmission[] = [
   {
-    id: 'ph-demo-1',
+    id: 'demo-1',
     businessName: "Garden City Logistics",
     industry: "Logistics & Transport",
     contactPerson: "Tamuno George",
@@ -53,7 +51,7 @@ const INITIAL_SME: SMESubmission[] = [
     },
     createdAt: new Date().toISOString(),
     adminNotes: "Client wants to stop using carbonized paper for waybills.",
-    aiStrategy: "1. PROBLEM: Waybills are on paper and get lost. 2. FIX: Move all waybills to a simple WhatsApp-linked digital form. 3. BENEFIT: No more lost items and faster payments for drivers.",
+    aiStrategy: "1. THE DIAGNOSIS: Manual paper waybills in Logistics & Transport cause accountability gaps. 2. SYSTEM RECOMMENDATION: Digital Waybill Engine & Driver Tracking. 3. ACTION: Migrate paper logs to cloud-sync forms immediately.",
     recommendedPackage: "Full Digital Workforce Suite"
   }
 ];
@@ -63,11 +61,15 @@ const App: React.FC = () => {
   const [submissions, setSubmissions] = useState<SMESubmission[]>([]);
   const [currentSubmission, setCurrentSubmission] = useState<SMESubmission | null>(null);
 
-  useEffect(() => {
+  const loadData = () => {
     const saved = localStorage.getItem(STORAGE_KEY);
     const data = saved ? JSON.parse(saved) : INITIAL_SME;
     setSubmissions(data);
-    if (data.length > 0) setCurrentSubmission(data[0]);
+    if (data.length > 0 && !currentSubmission) setCurrentSubmission(data[0]);
+  };
+
+  useEffect(() => {
+    loadData();
   }, []);
 
   useEffect(() => {
@@ -81,8 +83,9 @@ const App: React.FC = () => {
   const handleReadinessSubmit = (entry: any) => {
     const submission: SMESubmission = {
       ...entry,
-      id: Math.random().toString(36).substr(2, 9),
+      id: Math.random().toString(36).substr(2, 6),
       status: 'New Lead',
+      source: 'audit',
       implementationProgress: 0,
       createdAt: new Date().toISOString(),
     };
@@ -124,7 +127,7 @@ const App: React.FC = () => {
             onCancel={() => setActiveSection(AppSection.HOME)} 
           />
         )}
-        
+
         {activeSection === AppSection.ASSESSMENT_RESULT && currentSubmission && (
           <AssessmentResult 
             submission={currentSubmission} 
@@ -176,8 +179,6 @@ const App: React.FC = () => {
           </div>
         </div>
       </footer>
-
-      <AIChatbot />
     </div>
   );
 };

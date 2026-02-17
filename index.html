@@ -3,15 +3,32 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>BELCORE | SME Business Automation</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; }
+        :root {
+            -webkit-tap-highlight-color: transparent;
+        }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            overflow-x: hidden;
+            width: 100%;
+            position: relative;
+        }
+        /* Prevent layout shift on scrollbar appearance */
+        html { margin-left: calc(100vw - 100%); }
         .shadow-3xl { box-shadow: 0 35px 60px -15px rgba(0, 0, 0, 0.3); }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        /* Smooth scale for mobile inputs to prevent auto-zoom */
+        input, select, textarea {
+            font-size: 16px !important;
+        }
     </style>
 <script type="importmap">
 {
@@ -24,7 +41,7 @@
 }
 </script>
 </head>
-<body class="bg-[#FDFDFD] text-gray-900 antialiased">
+<body class="bg-[#FDFDFD] text-gray-900 antialiased overflow-x-hidden">
     <div id="root"></div>
 </body>
 </html>

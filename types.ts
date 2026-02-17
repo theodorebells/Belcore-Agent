@@ -2,29 +2,20 @@
 export type SMEStatus = 'New Lead' | 'Discovery' | 'Assessment' | 'Proposal Sent' | 'Implementation' | 'Completed';
 
 export interface ReadinessAnswers {
-  // Core & Location
   location: string;
-  
-  // Customer & Sales
   customerRecording: string[];
   storageMethod: string[];
   lostLeadsCount: string;
   followUpMethod: string[];
   paymentReminders: string[];
-  
-  // Operations
   repetitiveTasks: string;
   orderProcess: string[];
   inventoryMethod: string[];
   searchTime: string;
   teamComm: string[];
-
-  // Tech & Finance
   digitalTools: string[];
   primaryDevice: string;
   invoicingMethod: string[];
-
-  // Pain Points & Strategy
   errorSource: string[];
   biggestFrustration: string;
   breakPoint: string[];
@@ -47,7 +38,23 @@ export interface SMESubmission {
   implementationProgress: number;
   adminNotes?: string;
   aiStrategy?: string; 
-  recommendedPackage?: string; // New: Persisted package recommendation
+  recommendedPackage?: string;
+  source?: 'audit' | 'whatsapp_bot';
+  urgency?: 'high' | 'medium' | 'low';
+  appointmentTime?: string;
+}
+
+// Added missing WhatsAppSession interface to support the WhatsApp bot logic
+export interface WhatsAppSession {
+  phoneNumber: string;
+  stage: number;
+  history: { role: 'user' | 'bot'; text: string; timestamp: string }[];
+  businessName?: string;
+  industry?: string;
+  challenge?: string;
+  monthlyLoss?: string;
+  urgency?: 'high' | 'medium' | 'low';
+  appointmentTime?: string;
 }
 
 export enum AppSection {
