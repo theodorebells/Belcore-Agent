@@ -97,6 +97,14 @@ export const AUTOMATION_SOLUTIONS: AutomationSolution[] = [
     tag: "Scale",
     example: "See sales for your Port Harcourt and Lagos branches simultaneously without calling the managers every hour.",
     howItWorks: "Distributed cloud infrastructure that aggregates data from different locations into one owner's app."
+  },
+  {
+    icon: "⚖️",
+    tag: "FISCAL COMPLIANCE",
+    title: "Tax & Compliance Manager",
+    desc: "Real-time tax calculation engine for VAT (7.5%), PAYE (employee income tax), and WHT (5-10%) aligned with Nigeria's Tax Act. Auto-generates FIRS-ready reports — stay compliant without hiring an accountant.",
+    example: "Chidi runs a boutique in Abuja with ₦8M annual turnover and 3 staff. He was terrified of FIRS audits. Now BELCORE auto-calculates: 7.5% VAT on every sale, PAYE deductions on staff salaries using CRA bands, 5% WHT on his graphic designer invoices, and 10% WHT on contractor payments. At month-end, he downloads Excel reports in FIRS format. During his first audit, the examiner said 'These are the cleanest books I've seen from an SME.' Zero penalties, zero stress.",
+    howItWorks: "Every transaction is tagged with tax metadata. BELCORE's calculation engine processes: (1) VAT — 7.5% on taxable sales, tracks cumulative turnover against ₦25M registration threshold, flags when you approach it. (2) PAYE — Calculates monthly employee income tax using CRA relief (₦200k + 20% of gross) and progressive bands (7%-24%), auto-generates PAYE schedule. (3) WHT — Applies statutory rates: 5% on professional services, 10% on contracts/commissions, 5% on rent, 10% on technical services. Generates monthly remittance summaries. All reports export in FIRS-compliant Excel format. 2027 ROADMAP: Direct TaxPro-Max API integration for one-click e-filing of VAT returns, WHT remittances, and annual tax summaries."
   }
 ];
 

@@ -1,84 +1,68 @@
 
 import React, { useState, useEffect } from 'react';
-import { AppSection, SMESubmission, SMEStatus } from './types';
+import { AppSection, SMESubmission, SMEStatus, User } from './types';
+import { storage } from './services/db';
 import Header from './components/Header';
 import Home from './components/Home';
+import LoginPage from './components/LoginPage';
 import ReadinessForm from './components/ReadinessForm';
 import AssessmentResult from './components/AssessmentResult';
+import AIAgents from './components/AIAgents';
+import Services from './components/Services';
+import Payment from './components/Payment';
 import Comparison from './components/Comparison';
 import WorkflowDemo from './components/WorkflowDemo';
 import Dashboard from './components/Dashboard';
 import AdminPanel from './components/AdminPanel';
 import Roadmap from './components/Roadmap';
-import Services from './components/Services';
 import Contact from './components/Contact';
-import AIAgents from './components/AIAgents';
-
-const STORAGE_KEY = 'belcore_ph_official_v3';
-
-const INITIAL_SME: SMESubmission[] = [
-  {
-    id: 'demo-1',
-    businessName: "Garden City Logistics",
-    industry: "Logistics & Transport",
-    contactPerson: "Tamuno George",
-    phoneNumber: "08030001111",
-    challenge: "Waybill tracking chaos",
-    status: "Implementation",
-    implementationProgress: 45,
-    readiness: {
-      location: 'Port Harcourt',
-      customerRecording: ['Waybill Slips'],
-      storageMethod: ['Notebooks', 'Excel'],
-      lostLeadsCount: '11-30 (Critical)',
-      followUpMethod: ['Scrolling through WhatsApp'],
-      paymentReminders: ['Manual calls'],
-      repetitiveTasks: 'Manual driver dispatch',
-      orderProcess: ['Parcel booking', 'Waybill generation'],
-      inventoryMethod: ['Physical Ledger'],
-      searchTime: 'Very High',
-      teamComm: ['WhatsApp Group'],
-      digitalTools: ['WhatsApp Business'],
-      primaryDevice: 'Smartphone',
-      invoicingMethod: ['Manual Carbon-copy'],
-      errorSource: ['Typing waybills manually'],
-      biggestFrustration: 'Items get lost and drivers argue about payments',
-      breakPoint: ['Accountability'],
-      blockerToGrowth: ['Process lack'],
-      autoWish: 'Digital Waybill System',
-      monthlyLoss: '₦120k / 20 hrs',
-      investmentLevel: 'Growth (System Overhaul)'
-    },
-    createdAt: new Date().toISOString(),
-    adminNotes: "Client wants to stop using carbonized paper for waybills.",
-    aiStrategy: "1. THE DIAGNOSIS: Manual paper waybills in Logistics & Transport cause accountability gaps. 2. SYSTEM RECOMMENDATION: Digital Waybill Engine & Driver Tracking. 3. ACTION: Migrate paper logs to cloud-sync forms immediately.",
-    recommendedPackage: "Full Digital Workforce Suite"
-  }
-];
+import AIChatbot from './components/AIChatbot';
 
 const App: React.FC = () => {
   const [activeSection, setActiveSection] = useState<AppSection>(AppSection.HOME);
+  const [user, setUser] = useState<User | null>(null);
   const [submissions, setSubmissions] = useState<SMESubmission[]>([]);
   const [currentSubmission, setCurrentSubmission] = useState<SMESubmission | null>(null);
 
-  const loadData = () => {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    const data = saved ? JSON.parse(saved) : INITIAL_SME;
-    setSubmissions(data);
-    if (data.length > 0 && !currentSubmission) setCurrentSubmission(data[0]);
-  };
+  // Global Scroll to Top on section change
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, [activeSection]);
 
   useEffect(() => {
-    loadData();
+    const db = storage.get();
+    setSubmissions(db.submissions);
+    
+    const savedUser = localStorage.getItem('belcore_session');
+    if (savedUser) setUser(JSON.parse(savedUser));
+
+    const refreshData = () => {
+      const updatedDb = storage.get();
+      setSubmissions(updatedDb.submissions);
+    };
+    window.addEventListener('belcore_lead_added', refreshData);
+    return () => window.removeEventListener('belcore_lead_added', refreshData);
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(submissions));
-  }, [submissions]);
+  const handleLogin = (u: User) => {
+    setUser(u);
+    localStorage.setItem('belcore_session', JSON.stringify(u));
+    
+    // Role-based routing
+    if (u.role === 'ADMIN') {
+      setActiveSection(AppSection.ADMIN);
+    } else if (u.role === 'STAFF') {
+      setActiveSection(AppSection.DASHBOARD);
+    } else {
+      setActiveSection(AppSection.DASHBOARD);
+    }
+  };
 
-  useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-  }, [activeSection]);
+  const handleLogout = () => {
+    localStorage.removeItem('belcore_session');
+    setUser(null);
+    setActiveSection(AppSection.HOME);
+  };
 
   const handleReadinessSubmit = (entry: any) => {
     const submission: SMESubmission = {
@@ -88,97 +72,79 @@ const App: React.FC = () => {
       source: 'audit',
       implementationProgress: 0,
       createdAt: new Date().toISOString(),
+      depositPaid: false,
     };
-    setSubmissions([submission, ...submissions]);
+    storage.addSubmission(submission);
+    setSubmissions(storage.get().submissions);
     setCurrentSubmission(submission);
-    setActiveSection(AppSection.ASSESSMENT_RESULT);
+    // Explicit sequence: Audit -> Agents
+    setActiveSection(AppSection.AGENTS);
+  };
+
+  const handleAgentsNext = () => {
+    if (currentSubmission) {
+      setActiveSection(AppSection.ASSESSMENT_RESULT);
+    } else {
+      setActiveSection(AppSection.READINESS);
+    }
+  };
+
+  const handlePaymentSuccess = () => {
+    if (currentSubmission) {
+      storage.updateSubmission(currentSubmission.id, { depositPaid: true, status: 'Assessment' });
+      storage.addTransaction({
+        id: `TX-${Date.now()}`,
+        businessId: currentSubmission.id,
+        businessName: currentSubmission.businessName,
+        amount: 10000,
+        date: new Date().toISOString(),
+        status: 'Paid',
+        plan: 'Commitment Deposit'
+      });
+      setSubmissions(storage.get().submissions);
+      setActiveSection(AppSection.HOME);
+    }
   };
 
   const updateSubmissionWithAi = (id: string, aiStrategy: string, recommendedPackage?: string) => {
-    setSubmissions(prev => {
-      const updated = prev.map(s => s.id === id ? { ...s, aiStrategy, recommendedPackage } : s);
-      const current = updated.find(s => s.id === id);
-      if (current) setCurrentSubmission(current);
-      return updated;
-    });
+    storage.updateSubmission(id, { aiStrategy, recommendedPackage });
+    setSubmissions(storage.get().submissions);
+    const sub = storage.get().submissions.find(s => s.id === id);
+    if (sub) setCurrentSubmission(sub);
   };
 
   const updateStatus = (id: string, status: SMEStatus, progress: number, notes?: string) => {
-    setSubmissions(prev => prev.map(s => 
-      s.id === id ? { ...s, status, implementationProgress: progress, adminNotes: notes ?? s.adminNotes } : s
-    ));
+    storage.updateSubmission(id, { status, implementationProgress: progress, adminNotes: notes });
+    setSubmissions(storage.get().submissions);
   };
 
   return (
-    <div className="min-h-screen bg-[#FDFDFD] flex flex-col font-['Inter'] selection:bg-emerald-100 selection:text-emerald-900">
-      <Header activeSection={activeSection} onNavigate={setActiveSection} />
+    <div className="min-h-screen bg-[#FDFDFD] flex flex-col font-['Inter'] selection:bg-emerald-100 selection:text-emerald-900 overflow-x-hidden">
+      <Header activeSection={activeSection} onNavigate={setActiveSection} user={user} onLogout={handleLogout} />
 
-      <main className="flex-grow container mx-auto px-4 py-6 sm:py-12 max-w-6xl">
+      {/* Padding top accounts for the fixed header */}
+      <main className="flex-grow container mx-auto px-4 pb-12 pt-24 sm:pt-32 max-w-6xl relative">
         {activeSection === AppSection.HOME && (
           <Home 
             onStart={() => setActiveSection(AppSection.READINESS)} 
-            onSeeMoreAgents={() => setActiveSection(AppSection.AGENTS)} 
+            onAgents={() => setActiveSection(AppSection.AGENTS)} 
           />
         )}
-        
-        {activeSection === AppSection.READINESS && (
-          <ReadinessForm 
-            onSubmit={handleReadinessSubmit} 
-            onCancel={() => setActiveSection(AppSection.HOME)} 
-          />
-        )}
-
-        {activeSection === AppSection.ASSESSMENT_RESULT && currentSubmission && (
-          <AssessmentResult 
-            submission={currentSubmission} 
-            onNext={() => setActiveSection(AppSection.AGENTS)} 
-            onAiUpdate={updateSubmissionWithAi}
-          />
-        )}
-        
-        {activeSection === AppSection.AGENTS && (
-          <AIAgents 
-            onNext={() => setActiveSection(AppSection.SERVICES)} 
-            submission={currentSubmission}
-          />
-        )}
-        
-        {activeSection === AppSection.SERVICES && (
-          <Services 
-            submission={currentSubmission}
-            onContact={() => setActiveSection(AppSection.CONTACT)} 
-            onWorkflow={() => setActiveSection(AppSection.COMPARISON)} 
-          />
-        )}
-        
+        {activeSection === AppSection.LOGIN && <LoginPage onLogin={handleLogin} />}
+        {activeSection === AppSection.READINESS && <ReadinessForm onSubmit={handleReadinessSubmit} onCancel={() => setActiveSection(AppSection.HOME)} />}
+        {activeSection === AppSection.AGENTS && <AIAgents submission={currentSubmission} onNext={handleAgentsNext} />}
+        {activeSection === AppSection.ASSESSMENT_RESULT && currentSubmission && <AssessmentResult submission={currentSubmission} onNext={() => setActiveSection(AppSection.SERVICES)} onAiUpdate={updateSubmissionWithAi} />}
+        {activeSection === AppSection.SERVICES && <Services submission={currentSubmission} onWorkflow={() => setActiveSection(AppSection.COMPARISON)} onContact={() => setActiveSection(AppSection.PAYMENT)} />}
+        {activeSection === AppSection.PAYMENT && <Payment submission={currentSubmission} onSuccess={handlePaymentSuccess} onCancel={() => setActiveSection(AppSection.SERVICES)} />}
         {activeSection === AppSection.COMPARISON && <Comparison onNext={() => setActiveSection(AppSection.WORKFLOWS)} />}
         {activeSection === AppSection.WORKFLOWS && <WorkflowDemo onNext={() => setActiveSection(AppSection.DASHBOARD)} />}
-        {activeSection === AppSection.DASHBOARD && <Dashboard submissions={submissions} />}
-        {activeSection === AppSection.ADMIN && <AdminPanel submissions={submissions} onUpdate={updateStatus} />}
+        {activeSection === AppSection.DASHBOARD && <Dashboard submissions={submissions} user={user} />}
+        {activeSection === AppSection.ADMIN && <AdminPanel submissions={submissions} onUpdate={updateStatus} user={user} />}
         {activeSection === AppSection.ROADMAP && <Roadmap />}
-        
-        {activeSection === AppSection.CONTACT && (
-          <Contact 
-            prefillData={currentSubmission} 
-            onHome={() => setActiveSection(AppSection.HOME)} 
-          />
-        )}
+        {activeSection === AppSection.CONTACT && <Contact prefillData={currentSubmission} onHome={() => setActiveSection(AppSection.HOME)} />}
       </main>
 
-      <footer className="bg-white border-t py-12 sm:py-24 px-4">
-        <div className="max-w-4xl mx-auto flex flex-col md:flex-row justify-between items-center gap-10 sm:gap-12">
-          <div className="text-center md:text-left space-y-3">
-            <p className="font-black text-gray-900 uppercase tracking-tighter text-2xl sm:text-3xl">BELCORE <span className="text-emerald-600">CAPITAL</span></p>
-            <div className="space-y-1">
-              <p className="text-[10px] sm:text-[11px] font-black text-gray-400 uppercase tracking-[0.2em]">Registration RC: 9165301</p>
-              <p className="text-[10px] sm:text-[11px] font-black text-gray-400 uppercase tracking-[0.2em]">Regional Branches: Lagos | PH | Abuja</p>
-            </div>
-          </div>
-          <div className="text-center md:text-right text-[9px] sm:text-[10px] font-bold text-gray-300 uppercase tracking-[0.4em] leading-relaxed max-w-sm">
-            Strategic Software Engineering • Business Automation • Enterprise Intranet<br/>Powering 400+ Nigerian SMEs with Modern Efficiency.
-          </div>
-        </div>
-      </footer>
+      <AIChatbot />
     </div>
   );
 };

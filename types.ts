@@ -1,8 +1,39 @@
 
+export type Role = 'ADMIN' | 'CLIENT' | 'STAFF';
+
 export type SMEStatus = 'New Lead' | 'Discovery' | 'Assessment' | 'Proposal Sent' | 'Implementation' | 'Completed';
 
+export interface User {
+  id: string;
+  email: string;
+  password?: string;
+  name: string;
+  role: Role;
+  businessId?: string; 
+}
+
+export interface Transaction {
+  id: string;
+  businessId: string;
+  businessName: string;
+  amount: number;
+  date: string;
+  status: 'Paid' | 'Pending' | 'Overdue';
+  plan: string;
+}
+
+export interface SystemLog {
+  id: string;
+  timestamp: string;
+  userId: string;
+  userName: string;
+  action: string;
+  details: string;
+  type: 'auth' | 'data' | 'workflow' | 'error';
+}
+
 export interface ReadinessAnswers {
-  location: string;
+  location: string[];
   customerRecording: string[];
   storageMethod: string[];
   lostLeadsCount: string;
@@ -42,13 +73,21 @@ export interface SMESubmission {
   source?: 'audit' | 'whatsapp_bot';
   urgency?: 'high' | 'medium' | 'low';
   appointmentTime?: string;
+  depositPaid?: boolean;
 }
 
-// Added missing WhatsAppSession interface to support the WhatsApp bot logic
+// Added missing WhatsApp message structure
+export interface WhatsAppMessage {
+  role: 'user' | 'bot';
+  text: string;
+  timestamp: string;
+}
+
+// Added missing WhatsApp session state structure to resolve import errors
 export interface WhatsAppSession {
   phoneNumber: string;
   stage: number;
-  history: { role: 'user' | 'bot'; text: string; timestamp: string }[];
+  history: WhatsAppMessage[];
   businessName?: string;
   industry?: string;
   challenge?: string;
@@ -59,15 +98,16 @@ export interface WhatsAppSession {
 
 export enum AppSection {
   HOME = 'home',
+  LOGIN = 'login',
   READINESS = 'readiness',
   ASSESSMENT_RESULT = 'assessment_result',
-  SERVICES = 'services',
   AGENTS = 'agents',
-  ERROR_PROOFING = 'error_proofing',
-  COMPARISON = 'comparison',
-  WORKFLOWS = 'workflows',
+  SERVICES = 'services',
+  PAYMENT = 'payment',
   DASHBOARD = 'dashboard',
   ADMIN = 'admin',
   ROADMAP = 'roadmap',
-  CONTACT = 'contact'
+  CONTACT = 'contact',
+  COMPARISON = 'comparison',
+  WORKFLOWS = 'workflows'
 }

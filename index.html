@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
     <style>
         :root {
             -webkit-tap-highlight-color: transparent;
@@ -21,9 +22,6 @@
         }
         /* Prevent layout shift on scrollbar appearance */
         html { margin-left: calc(100vw - 100%); }
-        .shadow-3xl { box-shadow: 0 35px 60px -15px rgba(0, 0, 0, 0.3); }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         
         /* Smooth scale for mobile inputs to prevent auto-zoom */
         input, select, textarea {
@@ -40,8 +38,10 @@
   }
 }
 </script>
+<link rel="stylesheet" href="/index.css">
 </head>
 <body class="bg-[#FDFDFD] text-gray-900 antialiased overflow-x-hidden">
     <div id="root"></div>
+<script type="module" src="/index.tsx"></script>
 </body>
 </html>

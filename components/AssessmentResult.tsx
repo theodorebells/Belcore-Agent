@@ -14,7 +14,6 @@ const AssessmentResult: React.FC<AssessmentResultProps> = ({ submission, onNext,
   const [loadingPhase, setLoadingPhase] = useState(0); 
   const [isSimulationDone, setIsSimulationDone] = useState(false);
   const [aiBlueprint, setAiBlueprint] = useState<string>(submission.aiStrategy || '');
-  const [recommendedPlan, setRecommendedPlan] = useState<string>(submission.recommendedPackage || '');
   const hasFetched = useRef(false);
 
   const loadingMessages = [
@@ -45,8 +44,14 @@ const AssessmentResult: React.FC<AssessmentResultProps> = ({ submission, onNext,
   };
 
   const cleanText = (text: string) => {
-    // Remove markdown bolding (**) and other markers as requested
-    return text.replace(/\*\*/g, '').replace(/[#*`]/g, '').replace(/PACKAGE_RECOMMENDATION:.*$/s, '').trim();
+    return text
+      .replace(/\*\*/g, '')
+      .replace(/[#*`]/g, '')
+      .replace(/^\d+\.\s+(INTRODUCTION|DIAGNOSIS|SOLUTION|STRATEGY):?/gi, '')
+      .replace(/^\d+\.\s+/gm, '') 
+      .replace(/^INTRODUCTION:?/gi, '')
+      .replace(/PACKAGE_RECOMMENDATION:.*$/s, '')
+      .trim();
   };
 
   useEffect(() => {
@@ -73,17 +78,16 @@ const AssessmentResult: React.FC<AssessmentResultProps> = ({ submission, onNext,
         
         const prompt = `
           You are the BELCORE CONSULTANTS Strategic Engine.
-          Analyze ${submission.businessName} in the ${submission.industry} sector for BELCORE CAPITAL LTD (RC: 9165301).
+          Analyze ${submission.businessName} in the ${submission.industry} sector.
           
-          STRUCTURE:
-          1. INTRODUCTION: Start with a professional 1-sentence welcome from the BELCORE Engineering Team regarding this diagnostic review for 2026.
-          2. THE DIAGNOSIS: Explain how manual tracking (${submission.readiness.customerRecording.join(', ')}) causes "${submission.readiness.biggestFrustration}".
-          3. SYSTEM RECOMMENDATION: Pick 2 or more Belcore modules [${availableModules}] that solve the problem.
-          4. THE ACTION RUNDOWN: Give a 3-step action plan for deployment.
-          5. THE 2026 OUTLOOK: Expected efficiency gains.
-          
-          Rules: DO NOT USE BOLD MARKERS (like **). Use plain professional text only.
-          End with: PACKAGE_RECOMMENDATION: [Full Digital Workforce Suite or Core Automation Setup]
+          MANDATORY STRUCTURE:
+          - START IMMEDIATELY with the sentence: "The BELCORE Engineering Team welcomes you to this strategic review..."
+          - DO NOT USE ANY NUMBERING (e.g., No 1., 2., 3., etc).
+          - DO NOT USE SECTION HEADERS like "INTRODUCTION", "DIAGNOSIS", or "CONCLUSION".
+          - Focus on their primary pain: "${submission.readiness.biggestFrustration}".
+          - Propose a blend of these modules: [${availableModules}].
+          - Speak professionally in plain text paragraphs.
+          - End with exactly: PACKAGE_RECOMMENDATION: [Full Digital Workforce Suite]
         `;
 
         const response = await ai.models.generateContent({
@@ -93,22 +97,15 @@ const AssessmentResult: React.FC<AssessmentResultProps> = ({ submission, onNext,
 
         const rawText = response.text || "";
         let packageRec = "Full Digital Workforce Suite";
-        
-        // If the AI recommended more than 1 module/core plan, or uses "multiple", suggest the Full Suite
-        if (rawText.toLowerCase().includes("multiple") || rawText.split(',').length > 3) {
-            packageRec = "Full Digital Workforce Suite";
-        }
-
         if (rawText.includes("PACKAGE_RECOMMENDATION:")) {
           packageRec = rawText.split("PACKAGE_RECOMMENDATION:")[1].trim().split('\n')[0];
         }
         
         const strategyText = cleanText(rawText);
         setAiBlueprint(strategyText);
-        setRecommendedPlan(packageRec);
         onAiUpdate(submission.id, strategyText, packageRec);
       } catch (error) {
-        const fallback = `The BELCORE Engineering Team welcomes you to this strategic review. Our engineers identify that manual record-keeping is the primary friction point for ${submission.businessName}. We recommend deploying the Full Digital Workforce Suite immediately to seal revenue leaks and modernize your operations for 2026.`;
+        const fallback = `The BELCORE Engineering Team welcomes you to this strategic review. Our diagnostic indicates that manual processes at ${submission.businessName} are currently limiting scale. We recommend an immediate transition to a cloud-synchronized digital ledger to unify your operations and recover lost time.`;
         setAiBlueprint(fallback);
         onAiUpdate(submission.id, fallback, "Full Digital Workforce Suite");
       }
@@ -156,26 +153,15 @@ const AssessmentResult: React.FC<AssessmentResultProps> = ({ submission, onNext,
            </div>
         </div>
 
-        <div className="p-6 sm:p-20 space-y-12 sm:space-y-20">
+        <div className="p-6 sm:p-20 space-y-12">
           <div className="whitespace-pre-wrap font-bold text-gray-700 leading-relaxed text-lg sm:text-2xl font-['Inter'] tracking-tight">
             {aiBlueprint || "Compiling strategic analysis..."}
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6 sm:gap-8 pt-10 sm:pt-16 border-t-4 border-gray-900">
-            <div className="bg-emerald-50 p-8 sm:p-12 rounded-[30px] sm:rounded-[50px] border-2 border-emerald-100 space-y-4">
-               <p className="text-[9px] font-black text-emerald-600 uppercase tracking-widest">Recommended Deployment Tier</p>
-               <p className="text-2xl sm:text-4xl font-black text-emerald-900 tracking-tighter leading-none">{recommendedPlan || "Full Digital Workforce Suite"}</p>
-            </div>
-            
-            <div className="bg-gray-900 p-8 sm:p-12 rounded-[30px] sm:rounded-[50px] text-white flex flex-col justify-between gap-8 sm:gap-10">
-               <div className="space-y-2 sm:space-y-3">
-                 <p className="text-[9px] font-black text-gray-500 uppercase tracking-widest">Consultancy Phase</p>
-                 <h4 className="text-2xl sm:text-3xl font-black leading-tight">Proceed to Implementation</h4>
-               </div>
-               <button onClick={onNext} className="w-full py-6 sm:py-7 bg-emerald-600 text-white rounded-2xl sm:rounded-3xl font-black text-lg sm:text-xl hover:bg-emerald-500 transition-all active:scale-95 shadow-2xl">
-                 Continue to Reservation →
-               </button>
-            </div>
+          <div className="pt-10 border-t-4 border-gray-900 flex justify-end">
+             <button onClick={onNext} className="px-12 py-6 bg-emerald-600 text-white rounded-2xl font-black text-xl hover:bg-emerald-500 transition-all active:scale-95 shadow-2xl">
+               Proceed to Investment Plans →
+             </button>
           </div>
         </div>
       </div>
